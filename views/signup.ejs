@@ -1,0 +1,45 @@
+<%- include('partials/header') %>
+
+<div class="container">
+    <div class="form-box">
+        <h1 id="title">Sign Up</h1>
+
+        <% if (typeof errorMessage != "undefined") { %>
+            <div class="error-message" style="color: red;">
+                <%= errorMessage %>
+            </div>
+        <% } %>
+        
+        <form id="form" action="/signup" method="post">
+            <div class="input-group">
+                <div class="input-field" id="nameField">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" placeholder="Name" id="nameInput" name="name" required>
+                </div>
+
+                <div class="input-field">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" placeholder="Email" id="emailInput" name="username" required>
+                </div>
+
+                <div class="input-field">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" placeholder="Password" id="passwordInput" name="password" required>
+                </div>
+
+                <div class="input-field">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" placeholder="Confirm Password" id="confirmPasswordInput" name="confirmPassword" required>
+                </div>
+                <p>Lost password <a href="#">Click Here!</a></p>
+            </div>
+            <div class="btn-field">
+                <button type="submit">Sign Up</button>
+                <button type="button" onclick="location.href='/'" class="disable">Login</button>
+            </div>
+        </form>
+    </div> 
+</div>
+
+
+<%- include('partials/footer') %>

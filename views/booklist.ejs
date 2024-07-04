@@ -1,0 +1,45 @@
+<%- include('partials/header2') %>
+
+<div class="container mt-5">
+    <h1>Your Book List</h1>
+    <% if (books.length === 0) { %>
+        <h3>No books found. Add a new book to get started.</h3>
+    <% } else { %>
+        <ul class="list-group">
+            <% books.forEach(book => { %>
+                <li class="list-group-item">
+                    <h5>Title: <%= book.title %></h5>
+                    <p>Author: <%= book.author %></p>
+                    <p>Review: <%= book.review %></p>
+                    <p>Rating: <%= book.rating %> / 5</p>
+                    <form action="/deletebook" method="POST">
+                        <input type="hidden" name="bookId" value="<%= book._id %>">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </li>
+            <% }); %>
+        </ul>
+    <% } %>
+    <h2 class="mt-5">Add a New Book</h2>
+    <form action="/addbook" method="POST">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+        </div>
+        <div class="mb-3">
+            <label for="author" class="form-label">Author</label>
+            <input type="text" class="form-control" id="author" name="author" required>
+        </div>
+        <div class="mb-3">
+            <label for="review" class="form-label">Review</label>
+            <textarea class="form-control" id="review" name="review" rows="3" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="rating" class="form-label">Rating</label>
+            <input type="number" class="form-control" id="rating" name="rating" min="1" max="5" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Book</button>
+    </form>
+</div>
+
+<%- include('partials/footer2') %>

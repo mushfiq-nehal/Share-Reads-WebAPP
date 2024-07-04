@@ -1,0 +1,24 @@
+<%- include('partials/header2') %>
+
+<div class="container my-5">
+  <div class="position-relative p-5 text-center text-muted bg-body border border-dashed rounded-5">
+    <% if (typeof userImage != "undefined") { %>
+      <img src="<%= userImage %>" alt="Profile Picture" class="d-block mx-auto mb-4" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;">
+    <% } else { %>
+      <img src="images/user.png" alt="Profile Picture" class="d-block mx-auto mb-4" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;">
+    <% } %>
+    <h1 class="text-body-emphasis"><%= userName %></h1>
+    <p class="col-lg-12 mx-auto mb-10" id="detail">
+      <strong>Gender:</strong> <%= userGender %><br>
+      <strong>Email:</strong> <%= userEmail %><br>
+      <strong>Division:</strong> <%= userDivision %><br>
+      <strong>Address:</strong> <%= userAddress %><br>
+      <strong>Phone:</strong> <%= userPhone %><br>
+    </p>
+    <a href="/profile" class="btn btn-primary px-5 mb-5">
+      Edit Profile
+    </a>
+  </div>
+</div>
+
+<%- include('partials/footer2') %>
