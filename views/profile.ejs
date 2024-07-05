@@ -18,8 +18,12 @@
         <img src="images/user.png" alt="Profile Picture" class="d-block mx-auto mb-4" style="width: 150px; height: 150px; object-fit: cover;">
       <% } %>
 
+      <form action="/deletePhoto" method="POST" style="display:inline;">
+        <button type="submit" class="btn btn-danger">Delete Photo</button>
+      </form>
+
       <% if (typeof userName != "undefined") { %>
-        <h2 class="text-center mb-5"><%= userName %></h2>
+        <h2 class="text-center mb-5 mt-2"><%= userName %></h2>
       <% } %>
     </div>
 

@@ -91,3 +91,23 @@ exports.getProfileInfo = (req, res) => {
         res.redirect("/");
     });
 };
+
+exports.deletePhoto = async (req, res) => {
+    try {
+        if (!req.isAuthenticated()) {
+            return res.redirect('/');
+        }
+
+        const user = await User.findById(req.user._id);
+        if (user) {
+            user.profileImage = undefined;
+            await user.save();
+            res.redirect('/profile');
+        } else {
+            res.status(404).send('User not found');
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+};
