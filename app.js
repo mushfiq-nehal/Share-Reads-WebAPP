@@ -37,9 +37,12 @@ app.get("/profile", userController.getUser);
 app.post("/profile", userController.postUser);
 app.get("/profileInfo", userController.getProfileInfo);
 app.get("/booklist", userBooklistController.getBooks);
+app.get("/welcome", userController.getWelcome);
 app.post("/addBook", userBooklistController.addBook);
 app.post("/deleteBook", userBooklistController.deleteBook);
 app.post("/deletePhoto", userController.deletePhoto);
+app.post("/welcome", userController.postWelcome);
+
 
 app.listen(3000, function () {
     console.log("Server running at port 3000....");

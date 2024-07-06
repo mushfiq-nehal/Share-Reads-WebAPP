@@ -111,3 +111,33 @@ exports.deletePhoto = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
+
+exports.getWelcome = (req, res) => {
+
+    if (!req.isAuthenticated()) {
+        return res.redirect("/");
+    };
+
+    res.render("welcome");
+}
+
+
+exports.postWelcome = (req, res) => {
+
+    if (!req.isAuthenticated()) {
+        return res.redirect("/");
+    };
+
+
+    User.findById(req.user._id).then((user) => {
+        if (user) {
+            if (!user.profileComplete) {
+                res.redirect("/profile");
+            } else{
+                res.redirect("/profileInfo");
+            }
+        }
+    }).catch((err) => {
+        console.log(err);
+    });
+}
