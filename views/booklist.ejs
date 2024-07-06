@@ -8,20 +8,31 @@
         <ul class="list-group">
             <% books.forEach(book => { %>
                 <li class="list-group-item">
-                    <h5>Title: <%= book.title %></h5>
-                    <p>Author: <%= book.author %></p>
-                    <p>Review: <%= book.review %></p>
-                    <p>Rating: <%= book.rating %> / 5</p>
-                    <form action="/deletebook" method="POST">
-                        <input type="hidden" name="bookId" value="<%= book._id %>">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4>Title: <%= book.title %></h4>
+                            <p>Author: <%= book.author %></p>
+                            <p>Review: <%= book.review %></p>
+                            <p>Rating: <%= book.rating %> / 5</p>
+                            <form action="/deletebook" method="POST">
+                                <input type="hidden" name="bookId" value="<%= book._id %>">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                        <div class="col-md-4">
+                            <% if (book.bookImage) { %>
+                                <img src="<%= book.bookImage %>" alt="Book Image" class="img-fluid rounded" style="height: 250px; width: 180px;">
+                            <% } else { %>
+                                <img src="path/to/default-book-image.jpg" alt="Default Book Image" class="img-fluid rounded">
+                            <% } %>
+                        </div>
+                    </div>
                 </li>
             <% }); %>
         </ul>
     <% } %>
     <h2 class="mt-5">Add a New Book</h2>
-    <form action="/addbook" method="POST">
+    <form action="/addbook" method="POST" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
             <input type="text" class="form-control" id="title" name="title" required>
@@ -37,6 +48,10 @@
         <div class="mb-3">
             <label for="rating" class="form-label">Rating</label>
             <input type="number" class="form-control" id="rating" name="rating" min="1" max="5" required>
+        </div>
+        <div class="mb-3">
+            <label for="bookImage" class="form-label">Book Image</label>
+            <input type="file" class="form-control" id="bookImage" name="bookImage" required>
         </div>
         <button type="submit" class="btn btn-primary">Add Book</button>
     </form>

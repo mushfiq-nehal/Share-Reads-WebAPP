@@ -1,4 +1,18 @@
 const Book = require("../models/userBooklist");
+const multer = require('multer');
+const path = require('path');
+
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads/');
+    },
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+  
+const upload = multer({ storage: storage });
 
 exports.getBooks = async (req, res) => {
     if (req.isAuthenticated()) {
@@ -14,27 +28,37 @@ exports.getBooks = async (req, res) => {
     }
 };
 
-exports.addBook = async (req, res) => {
-    if (req.isAuthenticated()) {
-        try {
-            const newBook = new Book({
-                userId: req.user._id,
-                title: req.body.title,
-                author: req.body.author,
-                review: req.body.review,
-                rating: req.body.rating
-            });
+exports.addBook = [
+    upload.single('bookImage'),
+    async (req, res) => {
+        if (req.isAuthenticated()) {
+            try {
+                console.log('File:', req.file); 
 
-            await newBook.save();
-            res.redirect("/booklist");
-        } catch (err) {
-            console.log(err);
-            res.redirect("/booklist");
+                const bookImage = req.file ? `/uploads/${req.file.filename}` : undefined;
+
+                console.log(bookImage);
+
+                const newBook = new Book({
+                    userId: req.user._id,
+                    title: req.body.title,
+                    author: req.body.author,
+                    review: req.body.review,
+                    rating: req.body.rating,
+                    bookImage: bookImage
+                });
+
+                await newBook.save();
+                res.redirect("/booklist");
+            } catch (err) {
+                console.log(err);
+                res.redirect("/booklist");
+            }
+        } else {
+            res.redirect("/");
         }
-    } else {
-        res.redirect("/");
     }
-};
+];
 
 exports.deleteBook = async (req, res) => {
     if (req.isAuthenticated()) {

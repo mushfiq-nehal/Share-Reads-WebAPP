@@ -12,7 +12,8 @@ const userBooklist = new mongoose.Schema({
     title: String,
     author: String,
     review: String,
-    rating: String
+    rating: String,
+    bookImage: String
 });
 
 const UserBooklist = mongoose.model("UserBooklist", userBooklist);

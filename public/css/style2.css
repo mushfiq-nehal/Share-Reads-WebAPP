@@ -110,6 +110,8 @@ h3 {
     padding: 20px; 
     border: 1px solid #ced4da;
     border-radius: 5px; 
+    width: 700px;
+    font-size: larger;
 }
 
 .btn-danger {
