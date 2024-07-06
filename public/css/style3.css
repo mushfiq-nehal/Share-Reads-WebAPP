@@ -2,29 +2,31 @@ body {
     margin: 0;
     padding: 0;
     width: 100%;
-    height: 110vh;
+    height: 120vh;
     background-image: linear-gradient(rgba(0,0,50,0.6),rgba(0,0,50,0.6)), url("../images/background.jpg");
     background-position: center;
     background-size: cover;
     position: relative;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 h1 {
-    color: magenta;
+    color: #f1efe5;
+    font-weight: 200;
 }
 
 h2 {
-    color: #0056b3;
-    font-weight: bold;
-    font-size: 50px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: whitesmoke;
+    font-family: "Baskervville SC", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 60px;
+    padding-top: 20px;
 }
 
 .container {
     max-width: 1000px;
 }
-
 
 
 form.needs-validation .form-label {
@@ -45,29 +47,19 @@ form.needs-validation .form-select:focus {
     border-color: #80bdff;
 }
 
-button[type="submit"] {
+.btn-primary{
     background-color: #007bff;
     border-color: #007bff;
     color: #ffffff;
     border-radius: 5px;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: bold;
 }
 
-button[type="submit"]:hover {
-    background-color: #0056b3;
-    border-color: #004085;
-}
-
-button[type="button"] {
-    background-color: #28a745;
-    border-color: #28a745;
-    color: #ffffff;
-}
-
-button[type="button"]:hover {
-    background-color: #218838;
-    border-color: #1e7e34;
+.btn-danger{
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: bold;
 }
 
 img.d-block.mx-auto.mb-4 {
