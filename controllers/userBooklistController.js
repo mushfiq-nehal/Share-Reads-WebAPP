@@ -33,11 +33,7 @@ exports.addBook = [
     async (req, res) => {
         if (req.isAuthenticated()) {
             try {
-                console.log('File:', req.file); 
-
                 const bookImage = req.file ? `/uploads/${req.file.filename}` : undefined;
-
-                console.log(bookImage);
 
                 const newBook = new Book({
                     userId: req.user._id,

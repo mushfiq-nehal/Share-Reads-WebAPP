@@ -9,23 +9,23 @@
             <% books.forEach(book => { %>
                 <li class="list-group-item">
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-8 p-5">
                             <h4>Title: <%= book.title %></h4>
                             <p>Author: <%= book.author %></p>
                             <p>Review: <%= book.review %></p>
                             <p>Rating: <%= book.rating %> / 5</p>
-                            <form action="/deletebook" method="POST">
-                                <input type="hidden" name="bookId" value="<%= book._id %>">
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
                         </div>
                         <div class="col-md-4">
                             <% if (book.bookImage) { %>
                                 <img src="<%= book.bookImage %>" alt="Book Image" class="img-fluid rounded" style="height: 250px; width: 180px;">
-                            <% } else { %>
-                                <img src="path/to/default-book-image.jpg" alt="Default Book Image" class="img-fluid rounded">
                             <% } %>
                         </div>
+
+                        <form action="/deletebook" method="POST">
+                            <input type="hidden" name="bookId" value="<%= book._id %>">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+
                     </div>
                 </li>
             <% }); %>
