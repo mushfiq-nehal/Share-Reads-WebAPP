@@ -1,3 +1,82 @@
-<%- include('partials/header2') %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Card Dashboard</title>
+    <link rel="stylesheet" href="css/style5.css">
+</head>
+<body>
+    <header class="nav-header">
+        <nav>
+            <p class="navbar-brand">SHARE READS</p>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="navbar">
+                <li id="home"><a href="/dashboard">HOME</a></li>
+                <li id="profile"><a href="/profileInfo">PROFILE</a></li>
+                <li id="booklist"><a href="/booklist">BOOK LIST</a></li>
+                <li id="logout"><a href="/">LOG OUT</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section class="top">
+        <div>
+            <p class="subtitle">Welcome to Share Reads</p>
+            <h1 class="title">Available books to borrow!</h1>
+        </div>
+    </section>
 
-<%- include('partials/footer2') %>
+    <section class="book-cards">
+        <div class="container">
+            <% books.forEach(book => { %>
+                <div class="card">
+                    <img src="<%= book.bookImage %>" alt="<%= book.title %>" class="img">
+                    <div class="card-content">
+                        <h2 class="card-title"><%= book.title %></h2>
+                        <p class="card-author">by <%= book.author %></p>
+                        <p class="card-owner">Owner: <%= book.userId.name %></p>
+                        <p class="card-location">Location: <%= book.userId.division %></p>
+                        <div class="btn-container">
+                            <button class="btn">View</button>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </section>
+
+    <section class="load">
+        <div class="btn-container">
+            <% if (currentPage > 1) { %>
+                <a href="?page=<%= currentPage - 1 %>" class="btn">Prev</a>
+            <% } %>
+        </div>
+        <div class="page-number">
+            <p>Page <%= currentPage %> of <%= totalPages %></p>
+        </div>
+        <div class="btn-container">
+            <% if (currentPage < totalPages) { %>
+                <a href="?page=<%= currentPage + 1 %>" class="btn">Next</a>
+            <% } %>
+        </div>
+    </section>
+    <footer>
+        <div class="footer-padding"></div>
+        <div class="footer">
+            <p>Made with ❤️ by Durjoy</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('mobile-menu').addEventListener('click', function () {
+            this.classList.toggle('active');
+            document.querySelector('.navbar').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
