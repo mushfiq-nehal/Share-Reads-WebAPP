@@ -15,7 +15,6 @@ nav {
 nav p {
     color: #343a408b;
     font-size: 18px;
-    /* font-weight: 500; */
     letter-spacing: 7px;
     font-family: 'Roboto', sans-serif;
 }
@@ -27,7 +26,6 @@ nav p {
     font-size: 12px;
     letter-spacing: 5px;
     font-family: 'Roboto', sans-serif;
-    /* font-weight: 500; */
     margin-right: 0;
 }
 

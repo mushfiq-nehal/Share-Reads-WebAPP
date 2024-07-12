@@ -41,9 +41,14 @@
                         <p class="card-author">by <%= book.author %></p>
                         <p class="card-owner">Owner: <%= book.userId.name %></p>
                         <p class="card-location">Location: <%= book.userId.division %></p>
-                        <div class="btn-container">
-                            <button class="btn">View</button>
-                        </div>
+
+                        <form action="/viewDetails" method="GET">
+                            <input type="hidden" name="username" value="<%= book.userId.username %>">
+                            <div class="btn-container">
+                                <button type="submit" class="btn">View</button>
+                            </div>
+                        </form>
+        
                     </div>
                 </div>
             <% }) %>

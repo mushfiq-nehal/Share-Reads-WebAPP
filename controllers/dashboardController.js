@@ -28,3 +28,24 @@ exports.getDashboard = async (req, res) => {
         res.redirect('/');
     }
 };
+
+exports.getView = async (req, res) => {
+    if (req.isAuthenticated()) {
+        try {
+            const username = req.query.username;
+
+            const user = await User.findOne({ username: username });
+
+            if (user) {
+                res.render('viewDetails', { user });
+            } else {
+                res.redirect('/dashboard');
+            }
+        } catch (err) {
+            console.log(err);
+            res.redirect('/');
+        }
+    } else {
+        res.redirect('/');
+    }
+};
