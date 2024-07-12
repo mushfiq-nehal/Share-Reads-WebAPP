@@ -2,7 +2,7 @@
   "name": "share-reads",
   "version": "1.0.0",
   "description": "This is a book borrowing website.",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
