@@ -134,7 +134,7 @@ exports.postWelcome = (req, res) => {
             if (!user.profileComplete) {
                 res.redirect("/profile");
             } else{
-                res.redirect("/profileInfo");
+                res.redirect("/booklist");
             }
         }
     }).catch((err) => {
