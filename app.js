@@ -46,8 +46,6 @@ app.post("/deleteBook", userBooklistController.deleteBook);
 app.post("/deletePhoto", userController.deletePhoto);
 app.post("/welcome", userController.postWelcome);
 
-module.exports = app;
-
 app.listen(3300, function () {
     console.log("Server running at port 3300....");
 });
