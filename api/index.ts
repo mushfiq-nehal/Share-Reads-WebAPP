@@ -1,17 +1,16 @@
-require('dotenv').config();
-const express = require("express");
-const bodyParser = require("body-parser");
-const ejs = require("ejs");
-const mongoose = require("mongoose");
-const session = require("express-session");
-const passport = require("passport");
-const path = require('path');
+import express from 'express';
+import authController from '../controllers/authController';
+import userController from '../controllers/userController';
+import userBooklistController from '../controllers/userBooklistController';
+import dashboardController from '../controllers/dashboardController';
+import bodyParser from 'body-parser';
+import session from 'express-session';
+import passport from 'passport';
+import mongoose from 'mongoose';
+import path from 'path';
+import { VercelRequest, VercelResponse } from '@vercel/node';
 
-const authController = require("./controllers/authController");
-const userController = require("./controllers/userController");
-const userBooklistController = require('./controllers/userBooklistController');
-const dashboardController = require('./controllers/dashboardController');
-
+// Initialize express app
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -46,9 +45,9 @@ app.post("/deleteBook", userBooklistController.deleteBook);
 app.post("/deletePhoto", userController.deletePhoto);
 app.post("/welcome", userController.postWelcome);
 
-module.exports = app;
+export default (req: VercelRequest, res: VercelResponse) => {
+    app(req, res);
+};
 
-app.listen(3300, function () {
-    console.log("Server running at port 3300....");
-});
+app.listen(3300, () => console.log("Server ready on port 3300."));
 
