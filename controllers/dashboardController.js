@@ -33,11 +33,13 @@ exports.getView = async (req, res) => {
     if (req.isAuthenticated()) {
         try {
             const username = req.query.username;
+            const bookId = req.query.bookId;
 
             const user = await User.findOne({ username: username });
 
             if (user) {
-                res.render('viewDetails', { user });
+                const book = await Book.findOne({ _id: bookId, userId: user._id });
+                res.render('viewDetails', { user, book});
             } else {
                 res.redirect('/dashboard');
             }

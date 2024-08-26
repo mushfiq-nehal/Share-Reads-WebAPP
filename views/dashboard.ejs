@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Card Dashboard</title>
+    <title>Share Reads</title>
     <link rel="stylesheet" href="css/style5.css">
 </head>
 <body>
@@ -44,6 +44,7 @@
 
                         <form action="/viewDetails" method="GET">
                             <input type="hidden" name="username" value="<%= book.userId.username %>">
+                            <input type="hidden" name="bookId" value="<%= book._id %>">
                             <div class="btn-container">
                                 <button type="submit" class="btn">View</button>
                             </div>

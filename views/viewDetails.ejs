@@ -9,34 +9,112 @@
 </head>
 <body>
     <div class="container my-5">
-        <div class="position-relative p-5 text-center text-muted bg-body border border-dashed rounded-5">
-            <% if(typeof user.profileImage != "undefined") { %>
-                <img src="<%= user.profileImage %>" alt="<%= user.name %>" class="img">
-            <% } else { %>
-                <img src="images/user.png" alt="<%= user.name %>" class="img">
-            <% } %>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="p-5 text-center text-muted bg-body border border-dashed rounded-5">
+                    <% if(typeof user.profileImage != "undefined") { %>
+                        <img src="<%= user.profileImage %>" alt="<%= user.name %>" class="img-fluid rounded-circle mb-3">
+                    <% } else { %>
+                        <img src="images/user.png" alt="<%= user.name %>" class="img-fluid rounded-circle mb-3">
+                    <% } %>
 
-          <h1 class="text-body-emphasis"> <%= user.name %> </h1>
-          <p class="col-lg-6 mx-auto mb-3">
-            Division: <%= user.division %>
-          </p>
-          <p class="col-lg-6 mx-auto mb-3">
-            Address: <%= user.address %>
-          </p>
-          <p class="col-lg-6 mx-auto mb-3">
-            Email: <%= user.username %>
-          </p>
-          <p class="col-lg-6 mx-auto mb-3">
-            Phone: <%= user.phone %>
-          </p>
+                    <h1 class="text-body-emphasis"> <%= user.name %> </h1>
+                    <p class="mb-3">
+                        Division: <%= user.division %>
+                    </p>
+                    <p class="mb-3">
+                        Address: <%= user.address %>
+                    </p>
+                    <p class="mb-3">
+                        Email: <%= user.username %>
+                    </p>
+                    <p class="mb-3">
+                        Phone: <%= user.phone %>
+                    </p>
+                </div>
+            </div>
+            body {
+              padding-top: 80px;
+              width: 100%;
+              height: 100vh;
+              background-image: linear-gradient(rgba(0,0,50,0.6),rgba(0,0,50,0.6)), url("../images/background.jpg");
+              background-position: center;
+              background-size: cover;
+              position: relative;
+              color: #fff;
+          }
+          
+          .img {
+              width: 150px;
+              height: 150px;
+              object-fit: cover;
+              border-radius: 50%;
+          }
+          
+          p {
+              font-size: large;
+              font-weight: 500;
+              font-family: Arial, Helvetica, sans-serif;
+          }
+          
+          h1 {
+              font-family: Verdana, Geneva, Tahoma, sans-serif;
+              margin-top: 10px;
+          }
+          
+          .footer p {
+              margin-top: 80px;
+              font-size: 15px;
+              color: #fff;
+              text-align: center;
+          }
+          
+          .container {
+              background-color: rgba(255, 255, 255, 0.1);
+              border-radius: 15px;
+              padding: 20px;
+          }
+          
+          .text-muted {
+              color: #ddd !important;
+          }
+          
+          .bg-body {
+              background-color: rgba(255, 255, 255, 0.1) !important;
+          }
+          
+          .border-dashed {
+              border: 2px dashed #ddd !important;
+          }
+          
+          @media (max-width: 767px) {
+              .container .row {
+                  flex-direction: column;
+              }
+          
+              .img {
+                  width: 120px;
+                  height: 120px;
+              }
+          }
+          
+            <div class="col-md-6">
+                <div class="p-5 text-center text-muted bg-body border border-dashed rounded-5">
+                    <p class="mb-3">
+                        Review: <%= book.review %>
+                    </p>
+                    <p class="mb-3">
+                        Rating: <%= book.rating %> / 5
+                    </p>
+                </div>
+            </div>
         </div>
       </div>
 
       <div class="footer-padding"></div>
-      <div class="footer">
+      <div class="footer text-center mt-5">
         <p>Made with ❤️ by Durjoy</p>
       </div>
-    </div>
     
 </body>
 </html>
