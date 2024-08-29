@@ -45,6 +45,12 @@ app.post("/addBook", userBooklistController.addBook);
 app.post("/deleteBook", userBooklistController.deleteBook);
 app.post("/deletePhoto", userController.deletePhoto);
 app.post("/welcome", userController.postWelcome);
+app.get("/forgotPassword", authController.getforgotPassword);
+app.post("/forgotPassword", authController.postforgotPassword);
+app.get("/authCode", authController.getauthCode);
+app.post("/authCode", authController.postauthCode);
+app.get("/resetPassword", authController.getresetPassword);
+app.post("/resetPassword", authController.postresetPassword);
 
 app.listen(3000, function () {
     console.log("Server running at port 3000....");

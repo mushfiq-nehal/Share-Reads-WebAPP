@@ -13,7 +13,9 @@ const userInfoSchema = new mongoose.Schema({
     profileComplete: {
         type: Boolean,
         default: false
-    }
+    },
+    resetPasswordToken: String,
+    resetPasswordExpires: String
 });
 
 userInfoSchema.plugin(passportLocalMongoose);
