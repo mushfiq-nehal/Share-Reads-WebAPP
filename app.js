@@ -11,6 +11,7 @@ const authController = require("./controllers/authController");
 const userController = require("./controllers/userController");
 const userBooklistController = require('./controllers/userBooklistController');
 const dashboardController = require('./controllers/dashboardController');
+const sendRequestController = require('./controllers/sendRequestController');
 
 const app = express();
 
@@ -51,6 +52,9 @@ app.get("/authCode", authController.getauthCode);
 app.post("/authCode", authController.postauthCode);
 app.get("/resetPassword", authController.getresetPassword);
 app.post("/resetPassword", authController.postresetPassword);
+app.post("/sendRequest", sendRequestController.sendRequest);
+app.get("/notifications", sendRequestController.gethandleRequest);
+app.post("/notifications", sendRequestController.posthandleRequest);
 
 app.listen(3000, function () {
     console.log("Server running at port 3000....");

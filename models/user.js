@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const passportLocalMongoose = require("passport-local-mongoose");
 const passport = require("passport");
+const Book = require("../models/userBooklist");
 
 const userInfoSchema = new mongoose.Schema({
     name: String,
@@ -15,7 +16,26 @@ const userInfoSchema = new mongoose.Schema({
         default: false
     },
     resetPasswordToken: String,
-    resetPasswordExpires: String
+    resetPasswordExpires: String,
+    notifications: [
+        {
+            fromUser: {
+                 type: mongoose.Schema.Types.ObjectId, ref: 'User' 
+            },
+
+            book: { 
+                type: mongoose.Schema.Types.ObjectId, ref: 'UserBooklist' 
+            },
+
+            status: {
+                 type: String, enum: ['pending', 'accepted', 'ignored'], default: 'pending' 
+            },
+
+            createdAt: {
+                 type: Date, default: Date.now 
+            },
+        }
+    ]
 });
 
 userInfoSchema.plugin(passportLocalMongoose);

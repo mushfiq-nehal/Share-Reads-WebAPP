@@ -39,7 +39,18 @@ exports.getView = async (req, res) => {
 
             if (user) {
                 const book = await Book.findOne({ _id: bookId, userId: user._id });
-                res.render('viewDetails', { user, book});
+                
+                const requestExists = user.notifications.some(notification => 
+                    notification.fromUser.equals(req.user._id) && 
+                    notification.book.equals(bookId)
+                );
+        
+                res.render('viewDetails', { 
+                    user, 
+                    book, 
+                    requestExists 
+                });
+
             } else {
                 res.redirect('/dashboard');
             }

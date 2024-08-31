@@ -25,12 +25,14 @@
                     <p class="mb-3">
                         Address: <%= user.address %>
                     </p>
-                    <p class="mb-3">
-                        Email: <%= user.username %>
-                    </p>
-                    <p class="mb-3">
-                        Phone: <%= user.phone %>
-                    </p>
+
+                    <form action="/sendRequest" method="POST">
+                        <input type="hidden" name="toUserId" value="<%= user._id %>">
+                        <input type="hidden" name="bookId" value="<%= book._id %>">
+                        <button id="requestButton" type="submit" class="w-20 btn btn-primary mt-3">
+                            <%= requestExists ? "Cancel Request" : "Send Request" %>
+                        </button>
+                    </form>
                 </div>
             </div>
 
@@ -51,6 +53,26 @@
       <div class="footer text-center mt-5">
         <p>Made with ❤️ by Durjoy</p>
       </div>
+
+      <script>
+        document.getElementById('requestForm').addEventListener('submit', async function(event) {
+            event.preventDefault(); 
+            const formData = new FormData(this);
+            const response = await fetch('/sendRequest', {
+                method: 'POST',
+                body: formData
+            });
+        
+            const result = await response.json();
+        
+            const requestButton = document.getElementById('requestButton');
+            if (result.status === 'requested') {
+                requestButton.textContent = 'Cancel Request';
+            } else if (result.status === 'cancelled') {
+                requestButton.textContent = 'Send Request';
+            }
+        });
+        </script>     
     
 </body>
 </html>
