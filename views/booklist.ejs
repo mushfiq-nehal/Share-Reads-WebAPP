@@ -1,37 +1,69 @@
-<%- include('partials/header2') %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Reads</title>
+    <link rel="stylesheet" href="css/style2.css">
+</head>
+<body>
+    <header class="nav-header">
+        <nav>
+            <p class="navbar-brand">SHARE READS</p>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="navbar">
+                <li id="home"><a href="/dashboard">HOME</a></li>
+                <li id="profile"><a href="/profileInfo">PROFILE</a></li>
+                <li id="booklist"><a href="/booklist">BOOK LIST</a></li>
+                <li id="notifications"><a href="/notifications">NOTIFICATIONS</a></li>
+                <li id="logout"><a href="/">LOG OUT</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<div class="container mt-5">
-    <h1>Your Book List</h1>
+    <section class="top">
+        <h1 class="title">Your Book List</h1>
+    </section>
+
     <% if (books.length === 0) { %>
-        <h3>No books found. Add a new book to get started.</h3>
+        <h1 class="title">No books found. Add a new book to get started.</h1>
     <% } else { %>
-        <ul class="list-group">
+    
+    <section class="book-cards">
+        <div class="container">
             <% books.forEach(book => { %>
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col-md-8 p-5">
-                            <h4>Title: <%= book.title %></h4>
-                            <p>Author: <%= book.author %></p>
-                            <p>Review: <%= book.review %></p>
-                            <p>Rating: <%= book.rating %> / 5</p>
-                        </div>
-                        <div class="col-md-4">
-                            <% if (book.bookImage) { %>
-                                <img src="<%= book.bookImage %>" alt="Book Image" class="img-fluid rounded" style="height: 250px; width: 180px;">
-                            <% } %>
-                        </div>
-
-                        <form action="/deletebook" method="POST">
-                            <input type="hidden" name="bookId" value="<%= book._id %>">
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-
+                <div class="card">
+                    <div>
+                        <img src="<%= book.bookImage %>" alt="Book Image" class="img">
                     </div>
-                </li>
-            <% }); %>
-        </ul>
-    <% } %>
-    <h2 class="mt-5">Add a New Book</h2>
+
+                    <div>
+                        <div class="card-content">
+                            <h2 class="card-title">Title: <%= book.title %></h2>
+                            <p class="card-author">Author: <%= book.author %></p>
+                            <p class="card-owner">Review: <%= book.review %></p>
+                            <p class="card-location">Rating: <%= book.rating %> / 5</p>
+    
+                            <form action="/deleteBook" method="POST">
+                             <input type="hidden" name="bookId" value="<%= book._id %>">
+                                <div class="btn-container">
+                                    <button type="submit" class="btn">Delete</button>
+                                </div>
+                            </form>
+            
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </section>
+<% } %>
+
+<h2 class="mt-5">Add a New Book</h2>
     <form action="/addbook" method="POST" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
@@ -57,4 +89,19 @@
     </form>
 </div>
 
-<%- include('partials/footer2') %>
+ <footer>
+        <div class="footer-padding"></div>
+        <div class="footer">
+            <p>Made with ❤️ by Durjoy</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('mobile-menu').addEventListener('click', function () {
+            this.classList.toggle('active');
+            document.querySelector('.navbar').classList.toggle('active');
+        });
+    </script>
+    
+</body>
+</html>
