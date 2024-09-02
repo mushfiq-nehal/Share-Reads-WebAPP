@@ -26,6 +26,9 @@
     </header>
 
     <section class="top">
+        <div class="top-img">
+            <img src="images/Bookpile.png" alt="">
+        </div>
         <h1 class="title">Your Book List</h1>
     </section>
 
@@ -89,34 +92,44 @@
     </form>
 </div> -->
 
-<section class="upload-form">
-    <div class="review-form-container">
-        <h2>Add a New Book for Sharing!</h2>
-        <form action="#" method="post" enctype="multipart/form-data">
-            <div class="review-form-group">
-                <label for="title">Book Title:</label>
-                <input type="text" id="title" name="title" required>
-            </div>
-            <div class="review-form-group">
-                <label for="author">Author:</label>
-                <input type="text" id="author" name="author" required>
-            </div>
-            <div class="review-form-group">
-                <label for="review">Review:</label>
-                <textarea id="review" name="review" rows="5" required></textarea>
-            </div>
-            <div class="review-form-group">
-                <label for="rating">Rating (out of 5):</label>
-                <input type="number" id="rating" name="rating" min="1" max="5" required>
-            </div>
-            <div class="review-form-group">
-                <label for="image">Upload Image:</label>
-                <input type="file" id="image" name="image" accept="image/*">
-            </div>
-            <button type="submit" class="review-submit-button">Submit Review</button>
-        </form>
+<section class="upload-form-body">
+    <div class="upload-form">
+        <div class="review-form-container">
+            <h2>Add a New Book for Sharing!</h2>
+            <form action="#" method="post" enctype="multipart/form-data">
+                <div class="review-form-content">
+                    <div class="review-form-left">
+                        <div class="review-form-group">
+                            <label for="title">Book Title:</label>
+                            <input type="text" id="title" name="title" required>
+                        </div>
+                        <div class="review-form-group">
+                            <label for="author">Author:</label>
+                            <input type="text" id="author" name="author" required>
+                        </div>
+                        <div class="review-form-group">
+                            <label for="review">Review:</label>
+                            <textarea id="review" name="review" rows="5" required></textarea>
+                        </div>
+                        <div class="review-form-group">
+                            <label for="rating">Rating (out of 5):</label>
+                            <input type="number" id="rating" name="rating" min="1" max="5" required>
+                        </div>
+                        <div class="review-form-group">
+                            <label for="image">Upload Image:</label>
+                            <input type="file" id="image" name="image" accept="image/*">
+                        </div>
+                        <button type="submit" class="review-submit-button">Submit Review</button>
+                    </div>
+                    <div class="review-img">
+                        <img src="images/woman.png" alt="">
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </section>
+
 
 
  <footer>
