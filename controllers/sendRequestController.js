@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const nodemailer = require("nodemailer");
 
 exports.sendRequest = async (req, res) => {
     const { toUserId, bookId } = req.body;
@@ -53,5 +54,63 @@ exports.gethandleRequest  = async (req, res) => {
 };
 
 exports.posthandleRequest = async (req, res) => {
+    const { notificationId, action } = req.body;
+
+    try {
+        const user = await User.findById(req.user._id).populate('notifications.fromUser');
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        const notification = user.notifications.id(notificationId);
+        if (!notification) {
+            return res.status(404).send('Notification not found');
+        }
+
+        if (action === 'accept') {
+            notification.status = 'accepted';
+            await user.save();
+
+            const requestingUser = await User.findById(notification.fromUser._id);
+            if (!requestingUser) {
+                return res.status(404).send('Requesting user not found');
+            }
+
+            const transporter = nodemailer.createTransport({
+            host: "smtp.example.com",
+            port: 587,
+            secure: false,
+            service: "gmail",
+            auth: {
+                user: process.env.GMAIL,
+                pass: process.env.APP_PASSWORD,
+            },
+            });
+
+            const mailOptions = {
+                from: process.env.GMAIL,
+                to: requestingUser.username,
+                subject: 'Your Request has been Accepted!',
+                text: `Congratulations! Your book request has been accepted by ${user.name} (${user.username}). You can now coordinate for the book exchange.`,
+            };
+
+            await transporter.sendMail(mailOptions);
+
+        } else if (action === 'cancel') {
+            notification.status = 'ignored';
+            await user.save();
+        }
+
+            await User.findByIdAndUpdate(
+                req.user._id,
+                { $pull: { notifications: { _id: notificationId } } }
+            );
+
+        res.redirect('/notifications');
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send('Server error');
+    }
 };
 

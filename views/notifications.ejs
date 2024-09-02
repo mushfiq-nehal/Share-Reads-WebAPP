@@ -10,7 +10,7 @@
  <body>
     <header class="nav-header">
         <nav>
-            <p class="navbar-brand">SHARE READS</p>
+            <img src="images/Share Reads .png" alt="">
             <div class="menu-toggle" id="mobile-menu">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -37,16 +37,17 @@
                       <div class="modal-content rounded-4 shadow" style="background-color: snow;">
                         <div class="modal-header border-bottom-0">
                           <h2 class="modal-title fs-5">Book Request</h2>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body py-0">
                           <p><%= notification.fromUser.name %> wants to borrow your book!</p>
                           <p>The book name is <%= notification.book.title %></p>
                         </div>
                         <div class="modal-footer flex-column align-items-stretch w-100 gap-2 pb-3 border-top-0">
-                        <input type="hidden" name="notificationId" value="<%= notification._id %>">
-                          <button type="button" class="btn btn-lg btn-primary">Accept</button>
-                          <button type="button" class="btn btn-lg btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <form action="/posthandleRequest" method="post">
+                                <input type="hidden" name="notificationId" value="<%= notification._id %>">
+                                <button type="submit" name="action" value="accept" class="btn btn-lg btn-primary">Accept</button>
+                                <button type="submit" name="action" value="cancel" class="btn btn-lg btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            </form>
                         </div>
                       </div>
                     </div>

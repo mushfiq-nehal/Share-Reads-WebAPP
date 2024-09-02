@@ -67,37 +67,11 @@
     </section>
 <% } %>
 
-<!-- <h2 class="mt-5">Add a New Book</h2>
-    <form action="/addbook" method="POST" enctype="multipart/form-data">
-        <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" name="title" required>
-        </div>
-        <div class="mb-3">
-            <label for="author" class="form-label">Author</label>
-            <input type="text" class="form-control" id="author" name="author" required>
-        </div>
-        <div class="mb-3">
-            <label for="review" class="form-label">Review</label>
-            <textarea class="form-control" id="review" name="review" rows="3" required></textarea>
-        </div>
-        <div class="mb-3">
-            <label for="rating" class="form-label">Rating</label>
-            <input type="number" class="form-control" id="rating" name="rating" min="1" max="5" required>
-        </div>
-        <div class="mb-3">
-            <label for="bookImage" class="form-label">Book Image</label>
-            <input type="file" class="form-control" id="bookImage" name="bookImage" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Add Book</button>
-    </form>
-</div> -->
-
 <section class="upload-form-body">
     <div class="upload-form">
         <div class="review-form-container">
             <h2>Add a New Book for Sharing!</h2>
-            <form action="#" method="post" enctype="multipart/form-data">
+            <form action="/addbook" method="post" enctype="multipart/form-data">
                 <div class="review-form-content">
                     <div class="review-form-left">
                         <div class="review-form-group">
@@ -118,7 +92,7 @@
                         </div>
                         <div class="review-form-group">
                             <label for="image">Upload Image:</label>
-                            <input type="file" id="image" name="image" accept="image/*">
+                            <input type="file" id="bookImage" name="bookImage" accept="image/*">
                         </div>
                         <button type="submit" class="review-submit-button">Submit Review</button>
                     </div>
