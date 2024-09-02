@@ -166,7 +166,7 @@ body {
 }
 
 .top-img img {
-    max-width: 200px; /* Set maximum width for the image */
+    max-width: 100px; /* Set maximum width for the image */
     height: auto; /* Maintain aspect ratio */
 }
 
