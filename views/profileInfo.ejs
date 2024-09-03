@@ -26,31 +26,30 @@
     </header>
     
     <section class="profile">
-      <div class="container">
-          <div class="info">
-            <% if (typeof userImage != "undefined") { %>
-                <img src="<%= userImage %>" alt="Profile Picture" class="img">
-            <% } else { %>
-                <img src="images/user.png" alt="Profile Picture" class="img">
-            <% } %>
-              <div class="info-content">
-                <h1 class="name"><%= userName %></h1>
-                  <p class="details">
-                      <strong>Gender:</strong> <%= userGender %><br>
-                      <strong>Email:</strong> <%= userEmail %><br>
-                      <strong>Division:</strong> <%= userDivision %><br>
-                      <strong>Address:</strong> <%= userAddress %><br>
-                      <strong>Phone:</strong> <%= userPhone %><br>
-                  </p>
-
-                  <a href="/profile" class="btn btn-primary px-5 mb-5">
-                    Edit Profile
-                </a>
-              </div>
-          </div>
-      </div>
-  </section>
-
+        <div class="container">
+            <div class="info">
+                <% if (typeof userImage != "undefined") { %>
+                    <img src="<%= userImage %>" alt="Profile Picture" class="img">
+                <% } else { %>
+                    <img src="images/user.png" alt="Profile Picture" class="img">
+                <% } %>
+                <div class="info-content">
+                    <h1 class="name"><%= userName %></h1>
+                    <p class="details">
+                        <strong>Gender:</strong> <%= userGender %><br>
+                        <strong>Email:</strong> <%= userEmail %><br>
+                        <strong>Division:</strong> <%= userDivision %><br>
+                        <strong>Address:</strong> <%= userAddress %><br>
+                        <strong>Phone:</strong> <%= userPhone %><br>
+                    </p>
+                    <a href="/profile" class="btn btn-primary px-5 mb-5">Edit Profile</a>
+                </div>
+            </div>
+            <div class="profile-character">
+                <img src="images/profile.png" alt="Profile Character">
+            </div>
+        </div>
+    </section>
 
   <footer>
     <div class="footer-padding"></div>

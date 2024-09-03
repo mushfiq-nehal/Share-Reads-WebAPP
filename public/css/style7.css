@@ -109,32 +109,33 @@ body {
 }
 
 .container {
+    margin: 0 auto;
     max-width: 1200px;
     padding: 20px;
     margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Vertically align content */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+
+
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: calc(100% - 420px); /* Adjust width considering the profile-character width */
+    max-width: 900px;
+    box-sizing: border-box;
 }
 
 .profile {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 50px 0;
+    width: 100%;
 }
 
 .info {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    background-color: #fff;
+    align-items: flex-start; /* Align to the left */
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 600px;
-}
-
-.image {
-    margin-bottom: 20px;
 }
 
 .img {
@@ -142,6 +143,7 @@ body {
     width: 150px;
     height: 150px;
     object-fit: cover;
+    margin-bottom: 20px;
 }
 
 .name {
@@ -152,18 +154,53 @@ body {
 
 .info-content {
     width: 100%;
-    text-align: center;
+    text-align: left; /* Align text to the left */
 }
 
 .details {
     margin-bottom: 20px;
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: #555;
+}
+
+.profile-character {
+    width: 400px; /* Fixed width for the profile-character */
+    text-align: center;
+    box-sizing: border-box;
+    margin-left: 20px;
+}
+
+.profile-character img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .info {
+        width: 100%;
+        max-width: 100%;
+        text-align: center; /* Center content on smaller screens */
+    }
+
+    .profile-character {
+        width: 100%;
+        max-width: 100%;
+        margin-left: 0;
+        margin-top: 20px;
+    }
 }
 
 /* Button Styling */
 .btn-primary {
-    background-color: #007bff;
+    background-color: #3c00a0;
     border: none;
     color: white;
     padding: 10px 20px;
@@ -175,7 +212,7 @@ body {
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
+    background-color: #3c00a0;
 }
 
 /* Responsive Design */
