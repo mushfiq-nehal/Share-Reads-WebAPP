@@ -1,55 +1,71 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Share Reads</title>
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/style7.css">
-  <nav class="navbar navbar-default">
-    <div class="container">
-      <div class="navbar-header">
-        <img src="images/Share Reads .png" alt="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Reads</title>
+    <link rel="stylesheet" href="css/style7.css">
+</head>
+<body>
+    <header class="nav-header">
+        <nav>
+            <img src="images/Share Reads .png" alt="">
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="navbar">
+                <li id="home"><a href="/dashboard">HOME</a></li>
+                <li id="profile"><a href="/profileInfo">PROFILE</a></li>
+                <li id="booklist"><a href="/booklist">BOOK LIST</a></li>
+                <li id="notifications"><a href="/notifications">NOTIFICATIONS</a></li>
+                <li id="logout"><a href="/">LOG OUT</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section class="profile">
+      <div class="container">
+          <div class="info">
+              <div class="image">
+                  <% if (typeof userImage != "undefined") { %>
+                      <img src="<%= userImage %>" alt="Profile Picture" class="img">
+                  <% } else { %>
+                      <img src="images/user.png" alt="Profile Picture" class="img">
+                  <% } %>
+                  <h1 class="name"><%= userName %></h1>
+              </div>
+              <div class="info-content">
+                  <p class="details">
+                      <strong>Gender:</strong> <%= userGender %><br>
+                      <strong>Email:</strong> <%= userEmail %><br>
+                      <strong>Division:</strong> <%= userDivision %><br>
+                      <strong>Address:</strong> <%= userAddress %><br>
+                      <strong>Phone:</strong> <%= userPhone %><br>
+                  </p>
+                  <a href="/profile" class="btn btn-primary px-5 mb-5">
+                      Edit Profile
+                  </a>
+              </div>
+          </div>
       </div>
-        <ul class="nav navbar-nav navbar-right">
-          <li id="home"><a href="/dashboard">HOME</a></li>
-          <li id="profile"><a href="/profileInfo">PROFILE</a></li>
-          <li id="booklist"><a href="/booklist">BOOK LIST</a></li>
-          <li id="notifications"><a href="/notifications">NOTIFICATIONS</a></li>
-          <li id="logout"><a href="/">LOG OUT</a></li>
-        </ul>
+  </section>
+
+
+  <footer>
+    <div class="footer-padding"></div>
+    <div class="footer">
+        <p>Made with ❤️ by Durjoy</p>
     </div>
-  </nav>
+</footer>
 
-  <body>
-    <div class="container">
-<div class="container my-5">
-  <div class="position-relative p-5 text-center text-muted bg-body border border-dashed rounded-5">
-    <% if (typeof userImage != "undefined") { %>
-      <img src="<%= userImage %>" alt="Profile Picture" class="d-block mx-auto mb-4" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;">
-    <% } else { %>
-      <img src="images/user.png" alt="Profile Picture" class="d-block mx-auto mb-4" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;">
-    <% } %>
-    <h1 class="text-body-emphasis"><%= userName %></h1>
-    <p class="col-lg-12 mx-auto mb-10" id="detail">
-      <strong>Gender:</strong> <%= userGender %><br>
-      <strong>Email:</strong> <%= userEmail %><br>
-      <strong>Division:</strong> <%= userDivision %><br>
-      <strong>Address:</strong> <%= userAddress %><br>
-      <strong>Phone:</strong> <%= userPhone %><br>
-    </p>
-    <a href="/profile" class="btn btn-primary px-5 mb-5">
-      Edit Profile
-    </a>
-  </div>
-</div>
-
-</div>
-<div class="footer-padding"></div>
-  <div class="footer">
-    <p>Made with ❤️ by Durjoy</p>
-  </div>
-</div>
+<script>
+    document.getElementById('mobile-menu').addEventListener('click', function () {
+        this.classList.toggle('active');
+        document.querySelector('.navbar').classList.toggle('active');
+    });
+</script>
+  
 </body>
 </html>
