@@ -28,15 +28,13 @@
     <section class="profile">
       <div class="container">
           <div class="info">
-              <div class="image">
-                  <% if (typeof userImage != "undefined") { %>
-                      <img src="<%= userImage %>" alt="Profile Picture" class="img">
-                  <% } else { %>
-                      <img src="images/user.png" alt="Profile Picture" class="img">
-                  <% } %>
-                  <h1 class="name"><%= userName %></h1>
-              </div>
+            <% if (typeof userImage != "undefined") { %>
+                <img src="<%= userImage %>" alt="Profile Picture" class="img">
+            <% } else { %>
+                <img src="images/user.png" alt="Profile Picture" class="img">
+            <% } %>
               <div class="info-content">
+                <h1 class="name"><%= userName %></h1>
                   <p class="details">
                       <strong>Gender:</strong> <%= userGender %><br>
                       <strong>Email:</strong> <%= userEmail %><br>
@@ -44,9 +42,10 @@
                       <strong>Address:</strong> <%= userAddress %><br>
                       <strong>Phone:</strong> <%= userPhone %><br>
                   </p>
+
                   <a href="/profile" class="btn btn-primary px-5 mb-5">
-                      Edit Profile
-                  </a>
+                    Edit Profile
+                </a>
               </div>
           </div>
       </div>
