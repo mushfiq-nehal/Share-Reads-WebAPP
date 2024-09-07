@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Share Reads</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style9.css">
  </head>
  <body>
+
     <header class="nav-header">
         <nav>
             <img src="images/Share Reads .png" alt="">
@@ -25,36 +25,39 @@
             </ul>
         </nav>
     </header>
+
     <% if (notifications.length === 0) { %>
         <h1>You have no notifications</h1>
     <% } else { %>
 
-    <% notifications.forEach(notification => { %>
-        <div>
-            <form action="/notifications" method="POST">
-                <div class="modal modal-sheet position-static d-block p-4 py-md-3" tabindex="-1" role="dialog" id="modalSheet">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content rounded-4 shadow" style="background-color: snow;">
-                        <div class="modal-header border-bottom-0">
-                          <h2 class="modal-title fs-5">Book Request</h2>
-                        </div>
-                        <div class="modal-body py-0">
-                          <p><%= notification.fromUser.name %> wants to borrow your book!</p>
-                          <p>The book name is <%= notification.book.title %></p>
-                        </div>
-                        <div class="modal-footer flex-column align-items-stretch w-100 gap-2 pb-3 border-top-0">
-                            <form action="/posthandleRequest" method="post">
-                                <input type="hidden" name="notificationId" value="<%= notification._id %>">
-                                <button type="submit" name="action" value="accept" class="btn btn-lg btn-primary">Accept</button>
-                                <button type="submit" name="action" value="cancel" class="btn btn-lg btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <section class="notifications">
+            <div class="container">
+                 <% notifications.forEach(notification => { %>
+                    <div class="card">
+                    
+                            <form action="/notifications" method="post">
+
+                            <div class="card-content">
+
+                             <h2 class="modal-title fs-5">Book Request</h2>
+
+                              <img src="<%= notification.fromUser.profileImage %>" alt="User" class="img">
+                               
+                              A reader named <h4><%= notification.fromUser.name %></h4> from <h4><%= notification.fromUser.address %></h4> wants to borrow your <h4><%= notification.book.title %></h4> book. If you accept his request, we will email him your contact information. Otherwise you can canceled his request.
+
+                              </div>
+
                             </form>
-                        </div>
-                      </div>
+                            
+                             <form action="/notifications" method="post">
+                                    <input type="hidden" name="notificationId" value="<%= notification._id %>">
+                                    <button type="submit" name="action" value="accept" class="btn-ac">Accept</button>
+                                    <button type="submit" name="action" value="cancel" class="btn-ig">Cancel</button>
+                            </form>
                     </div>
-                  </div>
-            </form>
-        </div>
-    <% }) %>
+                <% }) %>
+            </div>
+        </section>
 
     <% } %>
     
