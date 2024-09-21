@@ -130,6 +130,7 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     transition: transform 0.2s;
+    width: 300px;
 }
 
 .card:hover {
@@ -137,8 +138,8 @@ body {
 }
 
 .card img {
-    width: 250px;
-    height: 320px;
+    width: 300px;
+    height: 340px;
 }
 
 .card-content {

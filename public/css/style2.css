@@ -190,14 +190,20 @@ body {
 }
 
 .btn {
-    padding: 10px 21px;
+    padding: 8px 18px;
     color: white;
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 600;
-    background-color: RED;
+    background-color: #dc3545;
     border: none;
     border-radius: 5px;
+    cursor: pointer;
 }
+
+.btn:hover {
+    background-color: #c82333;
+}
+
 
 .load {
     display: flex;
