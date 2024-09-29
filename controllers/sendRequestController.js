@@ -88,7 +88,10 @@ exports.posthandleRequest = async (req, res) => {
             });
 
             const mailOptions = {
-                from: process.env.GMAIL,
+                from: {
+                    name: "Share Reads",
+                    address: process.env.GMAIL
+                },
                 to: requestingUser.username,
                 subject: 'Your Request has been Accepted!',
                 text: `Congratulations! Your book request has been accepted by ${user.name} (${user.username}). You can now coordinate for the book exchange.`,
