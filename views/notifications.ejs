@@ -10,7 +10,7 @@
 
     <header class="nav-header">
         <nav>
-            <img src="images/Share Reads .png" alt="">
+            <a href="/dashboard"> <img src="images/Share Reads .png" alt=""></a>
             <div class="menu-toggle" id="mobile-menu">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -27,7 +27,7 @@
     </header>
 
     <% if (notifications.length === 0) { %>
-        <h1>You have no notifications</h1>
+        <h1>You have no notifications!</h1>
     <% } else { %>
 
         <section class="notifications">
@@ -39,21 +39,35 @@
 
                             <div class="card-content">
 
-                             <h2 class="modal-title fs-5">Book Request</h2>
+                             <h2 class="modal-title">Book Request</h2>
 
-                              <img src="<%= notification.fromUser.profileImage %>" alt="User" class="img">
-                               
-                              A reader named <h4><%= notification.fromUser.name %></h4> from <h4><%= notification.fromUser.address %></h4> wants to borrow your <h4><%= notification.book.title %></h4> book. If you accept his request, we will email him your contact information. Otherwise you can canceled his request.
+                             <% if (typeof notification.fromUser.profileImage  != "undefined") { %>
+                                <img src="<%= notification.fromUser.profileImage  %>" alt="User" class="img">
+                            <% } else { %>
+                                <img src="images/user.png" alt="User" class="img">
+                            <% } %>
 
+                              <div class="notification-text">
+                                <h4><%= notification.fromUser.name %></h4> 
+                                from 
+                                <h4><%= notification.fromUser.address %></h4> 
+                                wants to borrow your book 
+                                <h4><%= notification.book.title %></h4>.
                               </div>
 
-                            </form>
-                            
-                             <form action="/notifications" method="post">
-                                    <input type="hidden" name="notificationId" value="<%= notification._id %>">
-                                    <button type="submit" name="action" value="accept" class="btn-ac">Accept</button>
-                                    <button type="submit" name="action" value="cancel" class="btn-ig">Cancel</button>
-                            </form>
+                             <p>
+                             If you accept his request, we will email him your contact information. Otherwise you can canceled his request.
+                             </p>
+
+                           </form>
+                           
+                            <form action="/notifications" method="post">
+                                   <input type="hidden" name="notificationId" value="<%= notification._id %>">
+                                   <button type="submit" name="action" value="accept" class="btn-ac">Accept</button>
+                                   <button type="submit" name="action" value="cancel" class="btn-ig">Cancel</button>
+                           </form>
+
+                        </div>
                     </div>
                 <% }) %>
             </div>

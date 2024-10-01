@@ -35,6 +35,8 @@ app.get("/", authController.getLogin);
 app.post("/", authController.postLogin);
 app.get("/signup", authController.getSignup);
 app.post("/signup", authController.postSignup);
+app.get("/verifyEmail", authController.getVerifyEmail);
+app.post("/verifyEmail", authController.postVerifyEmail);
 app.get("/profile", userController.getUser);
 app.post("/profile", userController.postUser);
 app.get("/profileInfo", userController.getProfileInfo);

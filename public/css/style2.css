@@ -191,14 +191,20 @@ body {
 }
 
 .btn {
-    padding: 10px 21px;
+    padding: 8px 18px;
     color: white;
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 600;
-    background-color: RED;
+    background-color: #dc3545;
     border: none;
     border-radius: 5px;
+    cursor: pointer;
 }
+
+.btn:hover {
+    background-color: #c82333;
+}
+
 
 .load {
     display: flex;
@@ -214,6 +220,11 @@ footer {
     background-color: #1abc9c;
     color: white;
     font-size: smaller;
+}
+
+h1 {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 
@@ -348,6 +359,12 @@ footer {
     .review-img {
         flex: 0 0 auto;
     }
+
+    .card img {
+        width: 380px;
+        height: 450px;
+    }
+    
 }
 
 /* Handle smaller screens */
