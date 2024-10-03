@@ -76,6 +76,7 @@ exports.getProfileInfo = (req, res) => {
 
     User.findById(req.user._id).then((user) => {
         if (user) {
+            const unreadCount = user.notifications.filter(notification => notification.unread).length;
             res.render("profileInfo", {
                 userName: user.name,
                 userGender: user.gender,
@@ -83,7 +84,8 @@ exports.getProfileInfo = (req, res) => {
                 userDivision: user.division,
                 userAddress: user.address,
                 userPhone: user.phone,
-                userImage: user.profileImage
+                userImage: user.profileImage,
+                unreadCount: unreadCount
             });
         }
     }).catch((err) => {

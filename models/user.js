@@ -40,6 +40,10 @@ const userInfoSchema = new mongoose.Schema({
             createdAt: {
                  type: Date, default: Date.now 
             },
+
+            unread: { 
+                type: Boolean, default: true 
+            }
         }
     ]
 });

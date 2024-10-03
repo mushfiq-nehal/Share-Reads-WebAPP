@@ -7,6 +7,7 @@ exports.getDashboard = async (req, res) => {
             const page = parseInt(req.query.page) || 1; 
             const limit = 8; 
             const skip = (page - 1) * limit;
+            const user = await User.findOne({ username: req.user.username });
 
             const books = await Book.find({})
                                     .populate('userId')
@@ -14,11 +15,13 @@ exports.getDashboard = async (req, res) => {
                                     .limit(limit);
 
             const count = await Book.countDocuments({});
+            const unreadCount = user.notifications.filter(notification => notification.unread).length;
 
             res.render('dashboard', {
                 books,
                 currentPage: page,
-                totalPages: Math.ceil(count / limit)
+                totalPages: Math.ceil(count / limit),
+                unreadCount: unreadCount
             });
         } catch (err) {
             console.log(err);

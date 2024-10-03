@@ -1,7 +1,7 @@
 const Book = require("../models/userBooklist");
 const multer = require('multer');
 const path = require('path');
-
+const User = require("../models/user");
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -18,7 +18,9 @@ exports.getBooks = async (req, res) => {
     if (req.isAuthenticated()) {
         try {
             const books = await Book.find({ userId: req.user._id });
-            res.render("booklist", { books });
+            const user = await User.findById(req.user._id)
+            const unreadCount = user.notifications.filter(notification => notification.unread).length;
+            res.render("booklist", { books, unreadCount: unreadCount });
         } catch (err) {
             console.log(err);
             res.redirect("/");

@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const nodemailer = require("nodemailer");
+const moment = require('moment');
 
 exports.sendRequest = async (req, res) => {
     const { toUserId, bookId } = req.body;
@@ -28,6 +29,7 @@ exports.sendRequest = async (req, res) => {
                 fromUser: fromUserId,
                 book: bookId,
                 status: 'pending',
+                unread: true
             });
             await user.save();
         }
@@ -45,8 +47,25 @@ exports.gethandleRequest  = async (req, res) => {
     
     if (req.isAuthenticated()) {
         const user = await User.findById(req.user._id).populate("notifications.fromUser").populate("notifications.book");
+
+        await User.updateMany(
+            { _id: req.user._id, 'notifications.unread': true },
+            { $set: { 'notifications.$[].unread': false } }
+        );
+
+        const sortedNotifications = user.notifications
+            .sort((a, b) => b.createdAt - a.createdAt)
+
+        const notifications = sortedNotifications.map(notification => {
+            return {
+                ...notification._doc, 
+                formattedTime: moment(notification.createdAt).fromNow(),
+            };
+        });
+
+        const unreadCount = user.notifications.filter(notification => notification.unread).length;
         
-        res.render('notifications', { notifications: user.notifications });
+        res.render('notifications', { notifications: notifications, unreadCount: unreadCount});
     } else {
         res.redirect('/');
     }
@@ -98,6 +117,16 @@ exports.posthandleRequest = async (req, res) => {
             };
 
             await transporter.sendMail(mailOptions);
+
+            requestingUser.notifications.push({
+                fromUser: req.user._id, 
+                book: notification.book,
+                status: 'accepted',
+                createdAt: Date.now(),
+                unread: true
+            });
+
+            await requestingUser.save(); 
 
         } else if (action === 'cancel') {
             notification.status = 'ignored';
