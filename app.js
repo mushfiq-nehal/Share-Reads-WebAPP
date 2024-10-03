@@ -12,6 +12,7 @@ const userController = require("./controllers/userController");
 const userBooklistController = require('./controllers/userBooklistController');
 const dashboardController = require('./controllers/dashboardController');
 const sendRequestController = require('./controllers/sendRequestController');
+const searchController = require('./controllers/searchController');
 
 const app = express();
 
@@ -57,6 +58,7 @@ app.post("/resetPassword", authController.postresetPassword);
 app.post("/sendRequest", sendRequestController.sendRequest);
 app.get("/notifications", sendRequestController.gethandleRequest);
 app.post("/notifications", sendRequestController.posthandleRequest);
+app.get("/searchBooks", searchController.getSearch);
 
 app.listen(3000, function () {
     console.log("Server running at port 3000....");

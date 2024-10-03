@@ -7,8 +7,9 @@ exports.getLogin = (req, res) => {
     res.render("login");
 };
 
-exports.postLogin = (req, res, next) => {
-    passport.authenticate("local", function(err, user, info) {
+exports.postLogin = async (req, res, next) => {
+    
+    passport.authenticate("local", async function(err, user, info) {
         if (err) { 
             console.log(err); 
             return next(err); 
@@ -16,13 +17,48 @@ exports.postLogin = (req, res, next) => {
         if (!user) { 
             return res.render("login", { errorMessage: "Invalid email or password" }); 
         }
+        if (!user.isVerified) {
+
+            const verificationToken = crypto.randomInt(10000, 100000); 
+            user.emailVerificationToken = verificationToken;
+            user.emailVerificationExpires = Date.now() + 5 * 60 * 1000;
+
+            await user.save();
+
+            const transporter = nodemailer.createTransport({
+                host: "smtp.example.com",
+                port: 587,
+                secure: false,
+                service: "gmail",
+                auth: {
+                    user: process.env.GMAIL,
+                    pass: process.env.APP_PASSWORD,
+                },
+            });
+
+            const mailOptions = {
+                from: {
+                    name: "Share Reads",
+                    address: process.env.GMAIL
+                },
+                to: user.username,
+                subject: 'Email Verification',
+                text: `Please verify your email address by using the following token:\n\n
+                ${verificationToken}\n\n
+                This token is valid for 5 minutes.`,
+            };
+
+            await transporter.sendMail(mailOptions);
+
+            return res.render("verifyEmail", { errorMessage: "Please verify your email before logging in." });
+        }
         req.logIn(user, function(err) {
             if (err) { 
                 console.log(err); 
                 return res.render("login", { errorMessage: "Login failed. Please try again." });
             }
 
-            res.render("welcome");
+            res.redirect("/welcome");
         });
     })(req, res, next);
 };
@@ -47,7 +83,7 @@ exports.postSignup = (req, res) => {
     User.register(user, password, async (err, user) => {
         if (err) {
             console.log(err);
-            return res.render("signup", { errorMessage: "User registration failed. Please try again." });
+            return res.render("signup", { errorMessage: "This email already have an account. Please try another." });
         }
 
         try {
