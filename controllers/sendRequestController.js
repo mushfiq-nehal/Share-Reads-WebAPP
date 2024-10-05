@@ -46,7 +46,7 @@ exports.sendRequest = async (req, res) => {
 
         await requestingUser.save();
 
-        res.redirect("/dashboard");
+        res.redirect("/viewSentRequest");
     } catch (error) {
         console.log(error);
         return res.status(500).send('Server error');

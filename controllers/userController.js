@@ -2,16 +2,9 @@ const User = require("../models/user");
 const passport = require("passport");
 const multer = require('multer');
 const path = require('path');
+const { bucket } = require('../firebase');
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/');
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname));
-  }
-});
-
+const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 exports.getUser = (req, res) => {
@@ -38,34 +31,49 @@ exports.getUser = (req, res) => {
     });
 };
 
+
 exports.postUser = [
     upload.single('profileImage'),
-    (req, res) => {
+    async (req, res) => {
         if (!req.isAuthenticated()) {
             return res.redirect("/");
         }
 
         const { address, phone, division, gender } = req.body;
-        let profileImage = req.file ? `/uploads/${req.file.filename}` : undefined;
 
-        User.findById(req.user._id).then((user) => {
+        try {
+            let profileImageUrl;
+            if (req.file) {
+                const fileName = Date.now() + path.extname(req.file.originalname);
+                const file = bucket.file(fileName);
+
+                await file.save(req.file.buffer, {
+                    metadata: { contentType: req.file.mimetype },
+                    public: true,
+                });
+
+                profileImageUrl = file.publicUrl(); 
+            }
+
+            const user = await User.findById(req.user._id);
             if (user) {
                 user.address = address;
                 user.phone = phone;
                 user.division = division;
                 user.gender = gender;
-                if (profileImage) {
-                    user.profileImage = profileImage;
+                if (profileImageUrl) {
+                    user.profileImage = profileImageUrl; 
                 }
                 user.profileComplete = true;
-                return user.save();
+                await user.save();
+                res.redirect("/profileInfo");
+            } else {
+                res.status(404).send("User not found");
             }
-        }).then(() => {
-            res.redirect("/profileInfo");
-        }).catch((err) => {
+        } catch (err) {
             console.log(err);
             res.redirect("/profile");
-        });
+        }
     }
 ];
 
