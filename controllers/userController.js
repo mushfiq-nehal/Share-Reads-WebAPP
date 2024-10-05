@@ -138,7 +138,6 @@ exports.postWelcome = (req, res) => {
         return res.redirect("/");
     };
 
-
     User.findById(req.user._id).then((user) => {
         if (user) {
             if (!user.profileComplete) {
