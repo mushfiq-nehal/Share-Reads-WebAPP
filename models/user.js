@@ -29,6 +29,10 @@ const userInfoSchema = new mongoose.Schema({
                  type: mongoose.Schema.Types.ObjectId, ref: 'User' 
             },
 
+            toUser: {
+                type: mongoose.Schema.Types.ObjectId, ref: 'User' 
+            },
+
             book: { 
                 type: mongoose.Schema.Types.ObjectId, ref: 'UserBooklist' 
             },
@@ -45,6 +49,23 @@ const userInfoSchema = new mongoose.Schema({
                 type: Boolean, default: true 
             }
         }
+    ],
+
+    sentRequests: [
+        {
+        toUser: { 
+            type: mongoose.Schema.Types.ObjectId, ref: 'User'
+         },
+        book: { 
+            type: mongoose.Schema.Types.ObjectId, ref: 'UserBooklist'
+        },
+        status: {
+             type: String, default: 'pending' 
+        },
+        createdAt: {
+             type: Date, default: Date.now
+         }
+       }
     ]
 });
 

@@ -27,12 +27,24 @@ exports.sendRequest = async (req, res) => {
            
             user.notifications.push({
                 fromUser: fromUserId,
+                toUser: toUserId,
                 book: bookId,
                 status: 'pending',
                 unread: true
             });
             await user.save();
         }
+
+        const requestingUser = await User.findById(fromUserId);
+
+        requestingUser.sentRequests.push({
+            toUser: toUserId,
+            book: bookId,
+            status: 'pending',
+            createdAt: Date.now()
+        });
+
+        await requestingUser.save();
 
         res.redirect("/dashboard");
     } catch (error) {
@@ -129,14 +141,27 @@ exports.posthandleRequest = async (req, res) => {
             await requestingUser.save(); 
 
         } else if (action === 'cancel') {
-            notification.status = 'ignored';
-            await user.save();
+
+            const requestingUser = await User.findById(notification.fromUser);
+            if (requestingUser) {
+              
+                requestingUser.notifications = requestingUser.notifications.filter(notif => 
+                    !(notif.fromUser.equals(req.user._id) && notif.book.equals(notification.book))
+                );
+                await requestingUser.save();
+            }
+
+            
+            await User.findByIdAndUpdate(req.user._id, {
+                $pull: { notifications: { _id: notificationId } }
+            });
         }
 
-            await User.findByIdAndUpdate(
-                req.user._id,
-                { $pull: { notifications: { _id: notificationId } } }
-            );
+    
+        await User.findByIdAndUpdate(
+            notification.fromUser,
+            { $pull: { sentRequests: { book: notification.book, toUser: req.user._id } } }
+        );
 
         res.redirect('/notifications');
 

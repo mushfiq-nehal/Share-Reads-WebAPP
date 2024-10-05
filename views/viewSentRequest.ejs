@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Reads</title>
+    <link rel="stylesheet" href="css/style10.css">
+    <link rel="icon" href="images/book.png" type="image/png">
+</head>
+<body>
+
+    <% if (requests.length === 0) { %>
+        <h1 class="text">No sent requests found!</h1>
+    <% } else { %>
+
+    <section class="sentList">
+        <div class="container">
+            <h1 class="title">Your Sent Requests</h1>
+            <p class="back"><a href="/profileInfo">Back to Profile</a></p>
+            <% requests.forEach(request => { %>
+                <div class="sent-details">
+                    <h2 class="user">Request to: <%= request.toUser.name %></h2>
+                    <p class="info">From: <%= request.toUser.address %></p>
+                    <p class="info">Book: <%= request.book.title %></p>
+                    <p class="info">Status: <%= request.status %></p>
+                    <p class="info">Sent: <%= request.formattedTime %></p>
+                    <form action="/cancelRequest" method="POST">
+                        <div class="btn-container">
+                            <input type="hidden" name="requestId" value="<%= request._id %>">
+                            <button type="submit" class="btn">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            <% }) %>
+        </div>
+    </section>
+    <% } %>
+</body>
+</html>
