@@ -138,7 +138,11 @@ exports.posthandleRequest = async (req, res) => {
                 unread: true
             });
 
-            await requestingUser.save(); 
+            await requestingUser.save();
+
+            await User.findByIdAndUpdate(req.user._id, {
+                $pull: { notifications: { _id: notificationId } }
+            });
 
         } else if (action === 'cancel') {
 
