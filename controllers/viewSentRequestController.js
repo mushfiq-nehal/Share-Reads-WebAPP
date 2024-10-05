@@ -10,13 +10,15 @@ exports.viewSentRequests = async (req, res) => {
                 .populate('sentRequests.toUser')
                 .populate('sentRequests.book');
 
-            const formattedRequests = user.sentRequests.map(request => {
-                return {
-                    ...request._doc,
-                    formattedTime: moment(request.createdAt).fromNow(),
-                };
-            });
+                const sortedRequests = user.sentRequests.sort((a, b) => b.createdAt - a.createdAt);
 
+                const formattedRequests = sortedRequests.map(request => {
+                    return {
+                        ...request._doc,
+                        formattedTime: moment(request.createdAt).fromNow(),
+                    };
+                });
+                
             res.render('viewSentRequest', { requests: formattedRequests });
         } catch (error) {
             console.log(error);
