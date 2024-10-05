@@ -1,17 +1,11 @@
 const Book = require("../models/userBooklist");
+const User = require("../models/user");
 const multer = require('multer');
 const path = require('path');
-const User = require("../models/user");
+const { bucket } = require('../firebase');
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads/');
-    },
-    filename: function (req, file, cb) {
-      cb(null, Date.now() + path.extname(file.originalname));
-    }
-});
-  
+
+const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 exports.getBooks = async (req, res) => {
@@ -33,27 +27,39 @@ exports.getBooks = async (req, res) => {
 exports.addBook = [
     upload.single('bookImage'),
     async (req, res) => {
-        if (req.isAuthenticated()) {
-            try {
-                const bookImage = req.file ? `/uploads/${req.file.filename}` : undefined;
+        if (!req.isAuthenticated()) {
+            return res.redirect("/");
+        }
 
-                const newBook = new Book({
-                    userId: req.user._id,
-                    title: req.body.title,
-                    author: req.body.author,
-                    review: req.body.review,
-                    rating: req.body.rating,
-                    bookImage: bookImage
+        try {
+            let bookImageUrl;
+            if (req.file) {
+                const fileName = Date.now() + path.extname(req.file.originalname);
+                const file = bucket.file(fileName);
+
+                await file.save(req.file.buffer, {
+                    metadata: { contentType: req.file.mimetype },
+                    public: true,
                 });
 
-                await newBook.save();
-                res.redirect("/booklist");
-            } catch (err) {
-                console.log(err);
-                res.redirect("/booklist");
+                bookImageUrl = file.publicUrl(); 
             }
-        } else {
-            res.redirect("/");
+
+            const newBook = new Book({
+                userId: req.user._id,
+                title: req.body.title,
+                author: req.body.author,
+                review: req.body.review,
+                rating: req.body.rating,
+                bookImage: bookImageUrl
+            });
+
+            await newBook.save();
+            res.redirect("/booklist");
+            
+        } catch (err) {
+            console.log(err);
+            res.redirect("/profile");
         }
     }
 ];
