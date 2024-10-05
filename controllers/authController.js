@@ -77,6 +77,10 @@ exports.postSignup = (req, res) => {
         return res.render("signup", { errorMessage: "Passwords doesn't match" });
     }
 
+     if (password.length < 8) {
+        return res.render("signup", { errorMessage: "Password must be at least 8 characters long" });
+    }
+
     const user = new User({ name: name, username: username, isVerified: false});
 
 
