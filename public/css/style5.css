@@ -326,6 +326,7 @@ footer hr {
 
     footer hr {
         margin: 20px 0;
+        margin: 0 auto;
     }
 }
 
@@ -341,6 +342,7 @@ footer hr {
 
     footer hr {
         margin: 10px 0;
+        margin: 0 auto;
     }
 }
 

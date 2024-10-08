@@ -9,12 +9,13 @@ exports.getDashboard = async (req, res) => {
             const skip = (page - 1) * limit;
             const user = await User.findOne({ username: req.user.username });
 
-            const books = await Book.find({})
-                                    .populate('userId')
-                                    .skip(skip)
-                                    .limit(limit);
+            const books = await Book.find({ userId: { $ne: user._id } })
+            .populate('userId')
+            .skip(skip)
+            .limit(limit)
+            
+            const count = await Book.countDocuments({ userId: { $ne: user._id } });
 
-            const count = await Book.countDocuments({});
             const unreadCount = user.notifications.filter(notification => notification.unread).length;
 
             res.render('dashboard', {
