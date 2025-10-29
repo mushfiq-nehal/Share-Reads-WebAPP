@@ -46,6 +46,7 @@ app.get("/booklist", userBooklistController.getBooks);
 app.get("/welcome", userController.getWelcome);
 app.get("/dashboard", dashboardController.getDashboard);
 app.get("/viewDetails", dashboardController.getView);
+app.get("/api/book-details", dashboardController.getBookDetailsAPI);
 app.post("/addBook", userBooklistController.addBook);
 app.post("/deleteBook", userBooklistController.deleteBook);
 app.post("/deletePhoto", userController.deletePhoto);

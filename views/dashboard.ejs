@@ -6,6 +6,7 @@
     <title>Dashboard - Share Reads</title>
     <script src="https://kit.fontawesome.com/b795da5b50.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/dashboard-modern.css">
+    <link rel="stylesheet" href="css/book-modal.css">
     <link rel="icon" href="images/book.png" type="image/png">
 </head>
 <body>
@@ -83,13 +84,9 @@
                         </div>
 
                         <div class="book-card-actions">
-                            <form action="/viewDetails" method="GET" style="flex: 1;">
-                                <input type="hidden" name="username" value="<%= book.userId.username %>">
-                                <input type="hidden" name="bookId" value="<%= book._id %>">
-                                <button type="submit" class="btn-view">
-                                    <i class="fa-solid fa-eye"></i> View Details
-                                </button>
-                            </form>
+                            <button class="btn-view" onclick="openBookModal('<%= book.userId.username %>', '<%= book._id %>')">
+                                <i class="fa-solid fa-eye"></i> View Details
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -132,12 +129,183 @@
         </div>
     </footer>
 
+    <!-- Book Details Modal -->
+    <div class="book-modal-overlay" id="bookModal">
+        <div class="book-modal">
+            <button class="book-modal-close" onclick="closeBookModal()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modalContent" class="book-modal-loading">
+                <i class="fa-solid fa-circle-notch fa-spin"></i> Loading...
+            </div>
+        </div>
+    </div>
+
     <script>
         // Mobile menu toggle
         document.getElementById('mobile-menu').addEventListener('click', function () {
             this.classList.toggle('active');
             document.getElementById('nav-menu').classList.toggle('active');
         });
+
+        // Book Modal Functions
+        async function openBookModal(username, bookId) {
+            const modal = document.getElementById('bookModal');
+            const content = document.getElementById('modalContent');
+            
+            modal.classList.add('active');
+            content.innerHTML = '<div class="book-modal-loading"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading...</div>';
+            
+            try {
+                const response = await fetch(`/api/book-details?username=${username}&bookId=${bookId}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    content.innerHTML = generateModalContent(data);
+                } else {
+                    content.innerHTML = '<div class="book-modal-loading">Error loading book details</div>';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                content.innerHTML = '<div class="book-modal-loading">Error loading book details</div>';
+            }
+        }
+
+        function closeBookModal() {
+            document.getElementById('bookModal').classList.remove('active');
+        }
+
+        // Close modal on overlay click
+        document.getElementById('bookModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeBookModal();
+            }
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeBookModal();
+            }
+        });
+
+        function generateModalContent(data) {
+            const { book, user, requestExists } = data;
+            const stars = generateStars(book.rating);
+            
+            return `
+                <div class="book-modal-content">
+                    <div class="book-modal-left">
+                        <img src="${book.bookImage}" alt="${book.title}" class="book-modal-cover">
+                        <h2 class="book-modal-title">${book.title}</h2>
+                        <p class="book-modal-author">by ${book.author}</p>
+                        <div class="book-modal-tags">
+                            <span class="book-tag"><i class="fa-solid fa-book"></i> Available</span>
+                        </div>
+                    </div>
+                    
+                    <div class="book-modal-right">
+                        <div class="book-modal-section">
+                            <h3 class="book-modal-section-title">
+                                <i class="fa-solid fa-quote-left"></i> Review
+                            </h3>
+                            <div class="book-modal-review">
+                                ${book.review}
+                            </div>
+                        </div>
+                        
+                        <div class="book-modal-section">
+                            <h3 class="book-modal-section-title">
+                                <i class="fa-solid fa-star"></i> Rating
+                            </h3>
+                            <div class="book-modal-rating">
+                                <div class="book-modal-stars">${stars}</div>
+                                <span class="book-modal-rating-text">${book.rating} / 5</span>
+                            </div>
+                        </div>
+                        
+                        <div class="book-modal-section">
+                            <h3 class="book-modal-section-title">
+                                <i class="fa-solid fa-user"></i> Book Owner
+                            </h3>
+                            <div class="book-modal-owner">
+                                <div class="owner-header">
+                                    <img src="${user.profileImage || '/images/user.png'}" alt="${user.name}" class="owner-avatar">
+                                    <div class="owner-info">
+                                        <h3>${user.name}</h3>
+                                        <p>@${user.username}</p>
+                                    </div>
+                                </div>
+                                <div class="owner-details">
+                                    <div class="owner-detail-item">
+                                        <i class="fa-solid fa-envelope"></i>
+                                        <span>${user.email}</span>
+                                    </div>
+                                    <div class="owner-detail-item">
+                                        <i class="fa-solid fa-map"></i>
+                                        <span>${user.division}</span>
+                                    </div>
+                                    <div class="owner-detail-item">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        <span>${user.address}</span>
+                                    </div>
+                                    ${user.phone ? `
+                                    <div class="owner-detail-item">
+                                        <i class="fa-solid fa-phone"></i>
+                                        <span>${user.phone}</span>
+                                    </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="book-modal-actions">
+                            <form action="/sendRequest" method="POST" onsubmit="handleRequestSubmit(event)">
+                                <input type="hidden" name="toUserId" value="${user._id}">
+                                <input type="hidden" name="bookId" value="${book._id}">
+                                <button type="submit" class="btn-modal-request ${requestExists ? 'cancel' : ''}">
+                                    ${requestExists 
+                                        ? '<i class="fa-solid fa-times"></i> Cancel Request' 
+                                        : '<i class="fa-solid fa-paper-plane"></i> Send Request'}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateStars(rating) {
+            let stars = '';
+            for (let i = 0; i < 5; i++) {
+                if (i < rating) {
+                    stars += '<i class="fa-solid fa-star"></i>';
+                } else {
+                    stars += '<i class="fa-regular fa-star"></i>';
+                }
+            }
+            return stars;
+        }
+
+        function handleRequestSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            
+            fetch(form.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(() => {
+                closeBookModal();
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+        }
     </script>
 </body>
 </html>

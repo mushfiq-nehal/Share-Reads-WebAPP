@@ -66,3 +66,55 @@ exports.getView = async (req, res) => {
         res.redirect('/');
     }
 };
+
+// API endpoint for modal book details
+exports.getBookDetailsAPI = async (req, res) => {
+    if (req.isAuthenticated()) {
+        try {
+            const username = req.query.username;
+            const bookId = req.query.bookId;
+
+            const user = await User.findOne({ username: username });
+
+            if (user) {
+                const book = await Book.findOne({ _id: bookId, userId: user._id });
+                
+                const requestExists = user.notifications.some(notification => 
+                    notification.fromUser.equals(req.user._id) && 
+                    notification.book.equals(bookId)
+                );
+        
+                res.json({ 
+                    success: true,
+                    user: {
+                        _id: user._id,
+                        name: user.name,
+                        username: user.username,
+                        email: user.email,
+                        division: user.division,
+                        address: user.address,
+                        phone: user.phone,
+                        profileImage: user.profileImage
+                    }, 
+                    book: {
+                        _id: book._id,
+                        title: book.title,
+                        author: book.author,
+                        bookImage: book.bookImage,
+                        review: book.review,
+                        rating: book.rating
+                    }, 
+                    requestExists 
+                });
+
+            } else {
+                res.json({ success: false, message: 'User not found' });
+            }
+        } catch (err) {
+            console.log(err);
+            res.json({ success: false, message: 'Error loading book details' });
+        }
+    } else {
+        res.json({ success: false, message: 'Not authenticated' });
+    }
+};
