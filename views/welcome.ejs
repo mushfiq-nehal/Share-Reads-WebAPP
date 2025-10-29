@@ -85,10 +85,12 @@
             left: 0;
             right: 0;
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 16px 0;
-            box-shadow: 0 4px 16px rgba(139, 127, 199, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 20px 0;
+            box-shadow: 0 4px 24px rgba(139, 127, 199, 0.08);
             z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
         }
         
         .nav-container {
@@ -108,6 +110,11 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .nav-logo:hover {
+            transform: scale(1.05);
         }
         
         .nav-buttons {
@@ -117,25 +124,29 @@
         }
         
         .btn-nav {
-            padding: 10px 24px;
-            border-radius: 12px;
-            font-weight: 600;
+            padding: 12px 28px;
+            border-radius: 14px;
+            font-weight: 700;
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: inline-flex;
             align-items: center;
             gap: 8px;
             font-size: 15px;
+            letter-spacing: 0.3px;
         }
         
         .btn-login {
             color: #8b7fc7;
-            background: rgba(139, 127, 199, 0.1);
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(139, 127, 199, 0.2);
         }
         
         .btn-login:hover {
-            background: rgba(139, 127, 199, 0.2);
+            background: white;
+            border-color: #8b7fc7;
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 127, 199, 0.2);
         }
         
         .btn-signup {
@@ -146,7 +157,7 @@
         
         .btn-signup:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(139, 127, 199, 0.4);
+            box-shadow: 0 6px 24px rgba(139, 127, 199, 0.4);
         }
         
         /* Hero Section - Split Layout */
@@ -175,8 +186,9 @@
         .hero-badge {
             display: inline-block;
             padding: 10px 24px;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-radius: 50px;
             font-size: 14px;
             font-weight: 600;
@@ -192,20 +204,22 @@
             line-height: 1.2;
             color: white;
             margin-bottom: 24px;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-shadow: 0 4px 20px rgba(107, 91, 140, 0.3);
         }
         
         .hero-main-title .highlight {
-            background: linear-gradient(135deg, #8b7fc7 0%, #ffb7d5 100%);
+            background: linear-gradient(135deg, #4a4a68 0%, #6b5b8c 50%, #8b7fc7 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            text-shadow: none;
+            display: inline-block;
         }
         
         .hero-description {
-            font-size: 20px;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.95);
+            font-size: 18px;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
             margin-bottom: 40px;
             max-width: 540px;
         }
@@ -228,17 +242,20 @@
         }
         
         .stat-number {
-            font-size: 42px;
+            font-size: 44px;
             font-weight: 800;
             color: white;
             line-height: 1;
             margin-bottom: 8px;
+            text-shadow: 0 4px 16px rgba(107, 91, 140, 0.3);
+            letter-spacing: -1px;
         }
         
         .stat-label {
             font-size: 15px;
-            color: rgba(255, 255, 255, 0.85);
-            font-weight: 500;
+            color: rgba(255, 255, 255, 0.88);
+            font-weight: 600;
+            letter-spacing: 0.3px;
         }
         
         .hero-image-right {
@@ -258,30 +275,33 @@
         .hero-image-wrapper::before {
             content: '';
             position: absolute;
-            top: -20px;
-            right: -20px;
+            top: -24px;
+            right: -24px;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(139, 127, 199, 0.3), rgba(255, 183, 213, 0.3));
+            background: linear-gradient(135deg, rgba(107, 91, 140, 0.4), rgba(139, 127, 199, 0.3));
             border-radius: 32px;
             z-index: -1;
+            filter: blur(2px);
         }
         
         .hero-image-wrapper img {
             width: 100%;
             height: auto;
-            border-radius: 24px;
-            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.2);
+            border-radius: 28px;
+            box-shadow: 0 24px 72px rgba(107, 91, 140, 0.35), 0 8px 24px rgba(0, 0, 0, 0.15);
             display: block;
+            border: 4px solid rgba(255, 255, 255, 0.6);
         }
         
         .floating-card {
             position: absolute;
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             padding: 16px 24px;
             border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 32px rgba(107, 91, 140, 0.2);
             animation: floatCard 3s ease-in-out infinite;
         }
         
@@ -304,27 +324,30 @@
         }
         
         .card-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #8b7fc7, #a89fd9);
-            border-radius: 12px;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #6b5b8c 0%, #8b7fc7 100%);
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 18px;
+            font-size: 20px;
+            box-shadow: 0 4px 16px rgba(107, 91, 140, 0.3);
         }
         
         .card-text h4 {
-            font-size: 14px;
-            font-weight: 700;
-            color: #4a4a68;
-            margin-bottom: 2px;
+            font-size: 15px;
+            font-weight: 800;
+            color: #3a3a4a;
+            margin-bottom: 3px;
+            letter-spacing: 0.3px;
         }
         
         .card-text p {
-            font-size: 12px;
-            color: #8e8ea7;
+            font-size: 13px;
+            color: #6e6e8a;
+            font-weight: 500;
         }
         
         @keyframes slideInLeft {
@@ -520,10 +543,10 @@
                 </p>
                 
                 <div class="hero-buttons">
-                    <a href="/signup" class="hero-cta-primary" style="font-size: 18px; padding: 18px 56px; text-decoration: none; background: linear-gradient(135deg, #8b7fc7 0%, #a89fd9 100%); box-shadow: 0 8px 32px rgba(139, 127, 199, 0.4); font-weight: 700; letter-spacing: 0.5px; border-radius: 16px; color: white; display: inline-flex; align-items: center; gap: 10px;">
+                    <a href="/signup" class="hero-cta-primary" style="font-size: 18px; padding: 18px 48px; text-decoration: none; background: linear-gradient(135deg, #8b7fc7 0%, #a89fd9 100%); box-shadow: 0 8px 32px rgba(139, 127, 199, 0.4); font-weight: 700; border-radius: 16px; color: white; display: inline-flex; align-items: center; gap: 10px;">
                         <i class="fa-solid fa-rocket"></i> Get Started Free
                     </a>
-                    <a href="/login" class="hero-cta-secondary" style="font-size: 18px; padding: 18px 56px; text-decoration: none; background: rgba(255, 255, 255, 0.95); color: #8b7fc7; backdrop-filter: blur(10px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15); font-weight: 700; border: 2px solid rgba(139, 127, 199, 0.3); border-radius: 16px; display: inline-flex; align-items: center; gap: 10px;">
+                    <a href="/login" class="hero-cta-secondary" style="font-size: 18px; padding: 18px 48px; text-decoration: none; background: rgba(255, 255, 255, 0.9); color: #8b7fc7; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 16px rgba(139, 127, 199, 0.2); font-weight: 700; border: 2px solid rgba(255, 255, 255, 0.5); border-radius: 16px; display: inline-flex; align-items: center; gap: 10px;">
                         <i class="fa-solid fa-sign-in-alt"></i> Login
                     </a>
                 </div>
