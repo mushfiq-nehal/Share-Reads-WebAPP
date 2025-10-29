@@ -79,7 +79,7 @@ exports.gethandleRequest  = async (req, res) => {
         
         res.render('notifications', { notifications: notifications, unreadCount: unreadCount});
     } else {
-        res.redirect('/');
+        res.redirect('/login');
     }
 
 };

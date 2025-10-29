@@ -26,10 +26,10 @@ exports.getDashboard = async (req, res) => {
             });
         } catch (err) {
             console.log(err);
-            res.redirect('/');
+            res.redirect('/login');
         }
     } else {
-        res.redirect('/');
+        res.redirect('/login');
     }
 };
 
@@ -60,10 +60,10 @@ exports.getView = async (req, res) => {
             }
         } catch (err) {
             console.log(err);
-            res.redirect('/');
+            res.redirect('/login');
         }
     } else {
-        res.redirect('/');
+        res.redirect('/login');
     }
 };
 

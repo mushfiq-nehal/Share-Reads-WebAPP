@@ -33,8 +33,9 @@ app.use(passport.session());
 
 mongoose.connect(process.env.DB_CONNECTION);
 
-app.get("/", authController.getLogin);
-app.post("/", authController.postLogin);
+app.get("/", userController.getWelcome);
+app.get("/login", authController.getLogin);
+app.post("/login", authController.postLogin);
 app.get("/signup", authController.getSignup);
 app.post("/signup", authController.postSignup);
 app.get("/verifyEmail", authController.getVerifyEmail);
@@ -43,14 +44,12 @@ app.get("/profile", userController.getUser);
 app.post("/profile", userController.postUser);
 app.get("/profileInfo", userController.getProfileInfo);
 app.get("/booklist", userBooklistController.getBooks);
-app.get("/welcome", userController.getWelcome);
 app.get("/dashboard", dashboardController.getDashboard);
 app.get("/viewDetails", dashboardController.getView);
 app.get("/api/book-details", dashboardController.getBookDetailsAPI);
 app.post("/addBook", userBooklistController.addBook);
 app.post("/deleteBook", userBooklistController.deleteBook);
 app.post("/deletePhoto", userController.deletePhoto);
-app.post("/welcome", userController.postWelcome);
 app.get("/forgotPassword", authController.getforgotPassword);
 app.post("/forgotPassword", authController.postforgotPassword);
 app.get("/authCode", authController.getauthCode);
@@ -63,6 +62,11 @@ app.post("/notifications", sendRequestController.posthandleRequest);
 app.get("/searchBooks", searchController.getSearch);
 app.get("/viewSentRequest", viewSentRequestController.viewSentRequests);
 app.post("/cancelRequest", viewSentRequestController.cancelRequest);
+app.get("/logout", (req, res) => {
+    req.logout(() => {
+        res.redirect('/');
+    });
+});
 
 app.listen(3000, function () {
     console.log("Server running at port 3000....");

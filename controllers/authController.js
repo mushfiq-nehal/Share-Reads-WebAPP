@@ -52,13 +52,18 @@ exports.postLogin = async (req, res, next) => {
 
             return res.render("verifyEmail", { errorMessage: "Please verify your email before logging in." });
         }
-        req.logIn(user, function(err) {
+        req.logIn(user, async function(err) {
             if (err) { 
                 console.log(err); 
                 return res.render("login", { errorMessage: "Login failed. Please try again." });
             }
 
-            res.redirect("/welcome");
+            // Check if profile is complete
+            if (!user.profileComplete) {
+                return res.redirect("/profile");
+            }
+            
+            res.redirect("/dashboard");
         });
     })(req, res, next);
 };
@@ -278,7 +283,7 @@ exports.postresetPassword = async (req, res) => {
 
             await user.save();
 
-            res.redirect("/");
+            res.redirect("/login");
         });
 
     } catch (err) {

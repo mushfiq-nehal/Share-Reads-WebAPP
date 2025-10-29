@@ -9,7 +9,7 @@ const upload = multer({ storage: storage });
 
 exports.getUser = (req, res) => {
     if (!req.isAuthenticated()) {
-        return res.redirect("/");
+        return res.redirect("/login");
     }
 
     User.findById(req.user._id).then(function (foundUser) {
@@ -36,7 +36,7 @@ exports.postUser = [
     upload.single('profileImage'),
     async (req, res) => {
         if (!req.isAuthenticated()) {
-            return res.redirect("/");
+            return res.redirect("/login");
         }
 
         const { address, phone, division, gender } = req.body;
@@ -79,7 +79,7 @@ exports.postUser = [
 
 exports.getProfileInfo = (req, res) => {
     if (!req.isAuthenticated()) {
-        return res.redirect("/");
+        return res.redirect("/login");
     }
 
     User.findById(req.user._id).then((user) => {
@@ -98,14 +98,14 @@ exports.getProfileInfo = (req, res) => {
         }
     }).catch((err) => {
         console.log(err);
-        res.redirect("/");
+        res.redirect("/login");
     });
 };
 
 exports.deletePhoto = async (req, res) => {
     try {
         if (!req.isAuthenticated()) {
-            return res.redirect('/');
+            return res.redirect('/login');
         }
 
         const user = await User.findById(req.user._id);
@@ -123,30 +123,6 @@ exports.deletePhoto = async (req, res) => {
 };
 
 exports.getWelcome = (req, res) => {
-
-    if (!req.isAuthenticated()) {
-        return res.redirect("/");
-    };
-
+    // Public page - no authentication required
     res.render("welcome");
-}
-
-
-exports.postWelcome = (req, res) => {
-
-    if (!req.isAuthenticated()) {
-        return res.redirect("/");
-    };
-
-    User.findById(req.user._id).then((user) => {
-        if (user) {
-            if (!user.profileComplete) {
-                res.redirect("/profile");
-            } else{
-                res.redirect("/booklist");
-            }
-        }
-    }).catch((err) => {
-        console.log(err);
-    });
 }

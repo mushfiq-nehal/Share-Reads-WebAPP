@@ -17,10 +17,10 @@ exports.getBooks = async (req, res) => {
             res.render("booklist", { books, unreadCount: unreadCount });
         } catch (err) {
             console.log(err);
-            res.redirect("/");
+            res.redirect("/login");
         }
     } else {
-        res.redirect("/");
+        res.redirect("/login");
     }
 };
 
@@ -28,7 +28,7 @@ exports.addBook = [
     upload.single('bookImage'),
     async (req, res) => {
         if (!req.isAuthenticated()) {
-            return res.redirect("/");
+            return res.redirect("/login");
         }
 
         try {
@@ -80,6 +80,6 @@ exports.deleteBook = async (req, res) => {
             res.redirect("/booklist");
         }
     } else {
-        res.redirect("/");
+        res.redirect("/login");
     }
 };
