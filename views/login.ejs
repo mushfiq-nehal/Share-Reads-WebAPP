@@ -1,42 +1,60 @@
-<%- include('partials/header') %>
-
-
-<div class="container">
-
-    <div class="form-box">
-        <img src="images/Share Reads .png" alt="">
-        <h1 id="title">Login</h1>
-
-        <% if (typeof errorMessage != "undefined") { %>
-            <div class="error-message" style="color: red;">
-                <%= errorMessage %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Share Reads</title>
+    <script src="https://kit.fontawesome.com/b795da5b50.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/auth-modern.css">
+    <link rel="icon" href="images/book.png" type="image/png">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-logo">
+                <img src="images/Share Reads .png" alt="Share Reads Logo">
             </div>
-        <% } %>
-        
-        <form id="form" action="/" method="post">
-            <div class="input-group">
-                <div class="input-field" id="nameField">
-                    <i class="fa-solid fa-user"></i>
-                    <input type="email" placeholder="Email" id="emailInput" name="username" required>
+            
+            <h1 class="auth-title">Welcome Back!</h1>
+            <p class="auth-subtitle">Login to continue sharing and discovering books</p>
+
+            <% if (typeof errorMessage != "undefined") { %>
+                <div class="error-message">
+                    <i class="fa-solid fa-circle-exclamation"></i> <%= errorMessage %>
+                </div>
+            <% } %>
+            
+            <form class="auth-form" action="/" method="post">
+                <div class="form-group">
+                    <div class="input-wrapper">
+                        <span class="input-icon">
+                            <i class="fa-solid fa-envelope"></i>
+                        </span>
+                        <input type="email" class="form-input" placeholder="Email address" name="username" required>
+                    </div>
                 </div>
 
-                <div class="input-field">
-                    <i class="fa-solid fa-lock"></i>
-                    <input type="password" placeholder="Password" id="passwordInput" name="password" required>
+                <div class="form-group">
+                    <div class="input-wrapper">
+                        <span class="input-icon">
+                            <i class="fa-solid fa-lock"></i>
+                        </span>
+                        <input type="password" class="form-input" placeholder="Password" name="password" required>
+                    </div>
+                    <a href="forgotPassword" class="form-link">Forgot password?</a>
                 </div>
 
-                <p>Forgot password? <a href="forgotPassword">Click Here!</a></p>
+                <div class="btn-group">
+                    <button type="submit" class="btn-auth btn-primary">
+                        <i class="fa-solid fa-sign-in-alt"></i> Login
+                    </button>
+                </div>
+            </form>
+
+            <div class="auth-footer">
+                Don't have an account? <a href="signup">Sign Up</a>
             </div>
-
-            <div class="btn-field">
-                <button type="submit">Login</button>
-                <button type="button" onclick="location.href='signup'" class="disable">Sign Up</button>
-            </div>
-        
-        </form>
-    </div> 
-</div>
-
-
-
-<%- include('partials/footer') %>
+        </div>
+    </div>
+</body>
+</html>

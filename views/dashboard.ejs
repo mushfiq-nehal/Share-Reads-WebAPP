@@ -3,111 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Share Reads</title>
-    <link rel="stylesheet" href="css/style5.css">
+    <title>Dashboard - Share Reads</title>
+    <script src="https://kit.fontawesome.com/b795da5b50.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/dashboard-modern.css">
     <link rel="icon" href="images/book.png" type="image/png">
-
 </head>
 <body>
-    <header class="nav-header">
-        <nav>
-            <a href="/dashboard"> <img src="images/Share Reads .png" alt=""></a>
+    <!-- Modern Navigation Header -->
+    <header class="modern-header">
+        <nav class="nav-container">
+            <a href="/dashboard" class="nav-logo">
+                <img src="images/Share Reads .png" alt="Share Reads Logo">
+            </a>
             <div class="menu-toggle" id="mobile-menu">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
             </div>
-            <ul class="navbar">
-                <li id="home"><a href="/dashboard">HOME</a></li>
-                <li id="profile"><a href="/profileInfo">PROFILE</a></li>
-                <li id="booklist"><a href="/booklist">BOOK LIST</a></li>
-                <li id="notifications"><a href="/notifications">NOTIFICATIONS
-                    <% if (unreadCount > 0) { %>
-                        <span class="notification-badge"><%= unreadCount %></span>
-                    <% } %>
-                </a></li>
-                <li id="logout"><a href="/">LOG OUT</a></li>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="/dashboard" class="active"><i class="fa-solid fa-home"></i> Home</a></li>
+                <li><a href="/profileInfo"><i class="fa-solid fa-user"></i> Profile</a></li>
+                <li><a href="/booklist"><i class="fa-solid fa-book"></i> My Books</a></li>
+                <li>
+                    <a href="/notifications">
+                        <i class="fa-solid fa-bell"></i> Notifications
+                        <% if (unreadCount > 0) { %>
+                            <span class="notification-badge"><%= unreadCount %></span>
+                        <% } %>
+                    </a>
+                </li>
+                <li><a href="/" style="color: #f5576c;"><i class="fa-solid fa-sign-out-alt"></i> Logout</a></li>
             </ul>
         </nav>
     </header>
     
-    <section class="top">
-        <div>
-            <p class="subtitle">Welcome to Share Reads</p>
-            <h1 class="title">Available books to borrow!</h1>
+    <!-- Hero Section -->
+    <section class="dashboard-hero">
+        <div class="hero-badge">
+            <i class="fa-solid fa-sparkles"></i> Welcome to Share Reads
         </div>
+        <h1 class="hero-title">Discover Amazing Books</h1>
+        <p class="hero-subtitle">Browse through our collection of books available for sharing</p>
     </section>
 
-    <section class="search-books">
-        <form action="/searchBooks" method="GET" class="search-bar">
-            <input type="text" name="query" placeholder="Search for a book" required>
-            <button type="submit">Search</button>
+    <!-- Search Section -->
+    <section class="search-section">
+        <form action="/searchBooks" method="GET" class="search-container">
+            <input type="text" name="query" placeholder="Search for books, authors, or genres..." required>
+            <button type="submit">
+                <i class="fa-solid fa-search"></i> Search
+            </button>
         </form>
     </section>
 
-    <section class="book-cards">
-        <div class="container">
+    <!-- Books Grid Section -->
+    <section class="books-section">
+        <div class="books-grid">
             <% books.forEach(book => { %>
-                <div class="card">
-                    <img src="<%= book.bookImage %>" alt="<%= book.title %>" class="img">
-                    <div class="card-content">
-                        <h2 class="card-title"><%= book.title %></h2>
-                        <p class="card-author">by <%= book.author %></p>
-                        <p class="card-owner">Owner: <%= book.userId.name %></p>
-                        <p class="card-location">Location: <%= book.userId.division %></p>
-
-                        <form action="/viewDetails" method="GET">
-                            <input type="hidden" name="username" value="<%= book.userId.username %>">
-                            <input type="hidden" name="bookId" value="<%= book._id %>">
-                            <div class="btn-container">
-                                <button type="submit" class="btn">View</button>
+                <div class="book-card">
+                    <div class="book-card-image-wrapper">
+                        <img src="<%= book.bookImage %>" alt="<%= book.title %>" class="book-card-image">
+                        <div class="book-card-badge">
+                            <i class="fa-solid fa-star"></i> Available
+                        </div>
+                    </div>
+                    <div class="book-card-content">
+                        <h2 class="book-card-title"><%= book.title %></h2>
+                        <p class="book-card-author">by <%= book.author %></p>
+                        
+                        <div class="book-card-details">
+                            <div class="book-card-detail">
+                                <i class="fa-solid fa-user"></i>
+                                <span><%= book.userId.name %></span>
                             </div>
-                        </form>
-        
+                            <div class="book-card-detail">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <span><%= book.userId.division %></span>
+                            </div>
+                        </div>
+
+                        <div class="book-card-actions">
+                            <form action="/viewDetails" method="GET" style="flex: 1;">
+                                <input type="hidden" name="username" value="<%= book.userId.username %>">
+                                <input type="hidden" name="bookId" value="<%= book._id %>">
+                                <button type="submit" class="btn-view">
+                                    <i class="fa-solid fa-eye"></i> View Details
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             <% }) %>
         </div>
-    </section>
 
-    <section class="load">
-        <div class="btn-container">
+        <!-- Pagination -->
+        <div class="pagination">
             <% if (currentPage > 1) { %>
-                <a href="?page=<%= currentPage - 1 %>" class="btn">Prev</a>
+                <a href="?page=<%= currentPage - 1 %>" class="pagination-btn">
+                    <i class="fa-solid fa-arrow-left"></i> Previous
+                </a>
             <% } %>
-        </div>
-        <div class="page-number">
-            <p>Page <%= currentPage %> of <%= totalPages %></p>
-        </div>
-        <div class="btn-container">
+            
+            <div class="pagination-info">
+                Page <%= currentPage %> of <%= totalPages %>
+            </div>
+            
             <% if (currentPage < totalPages) { %>
-                <a href="?page=<%= currentPage + 1 %>" class="btn">Next</a>
+                <a href="?page=<%= currentPage + 1 %>" class="pagination-btn">
+                    Next <i class="fa-solid fa-arrow-right"></i>
+                </a>
             <% } %>
         </div>
     </section>
 
-
-    <footer>
-        <div class="footer">
-            <div class="footer-content">
-                <p>Made with ❤️ by CSE Dept. of JUST</p>
+    <!-- Modern Footer -->
+    <footer class="modern-footer">
+        <div class="footer-content">
+            <div class="footer-text">
+                <i class="fa-solid fa-heart"></i> Made with love by CSE Dept. of JUST
             </div>
-            <div class="contact">
-                <p>Contact us: <a href="mailto:sharereadsbd@gmail.com">sharereadsbd@gmail.com</a></p>
+            <div class="footer-contact">
+                <i class="fa-solid fa-envelope"></i> <a href="mailto:sharereadsbd@gmail.com">sharereadsbd@gmail.com</a>
             </div>
         </div>
-        <hr>
-        <p>All rights reserved © Share Reads 2024</p>
+        <hr class="footer-divider">
+        <div class="footer-copyright">
+            © 2024 Share Reads. All rights reserved.
+        </div>
     </footer>
 
-
-    
     <script>
+        // Mobile menu toggle
         document.getElementById('mobile-menu').addEventListener('click', function () {
             this.classList.toggle('active');
-            document.querySelector('.navbar').classList.toggle('active');
+            document.getElementById('nav-menu').classList.toggle('active');
         });
     </script>
-    
 </body>
 </html>

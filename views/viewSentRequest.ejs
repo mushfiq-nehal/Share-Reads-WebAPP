@@ -3,53 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Share Reads</title>
-    <link rel="stylesheet" href="css/style10.css">
-    <link rel="icon" href="images/book.png" type="image/png">
+    <title>My Sent Requests | Share Reads</title>
+    <link rel="stylesheet" href="/css/dashboard-modern.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="/images/book.png" type="image/png">
 </head>
 <body>
+    <!-- Modern Header -->
+    <header class="modern-header">
+        <nav class="nav-container">
+            <div class="logo">
+                <i class="fa-solid fa-book-open"></i>
+                <span><a href="/dashboard">Share Reads</a></span>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="/dashboard"><i class="fa-solid fa-home"></i> Dashboard</a></li>
+                <li><a href="/booklist"><i class="fa-solid fa-book"></i> My Books</a></li>
+                <li><a href="/search"><i class="fa-solid fa-magnifying-glass"></i> Search</a></li>
+                <li><a href="/profileInfo"><i class="fa-solid fa-user"></i> Profile</a></li>
+                <li><a href="/viewSentRequest" class="active"><i class="fa-solid fa-paper-plane"></i> Requests</a></li>
+                <li><a href="/notifications"><i class="fa-solid fa-bell"></i> Notifications</a></li>
+                <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+            </ul>
+            <div class="mobile-menu" id="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
 
-    <% if (requests.length === 0) { %>
-        <h1 class="text">No sent requests found!</h1>
-    <% } else { %>
-
-    <section class="sentList">
-        <div class="container">
-            <h1 class="title">Your Sent Requests</h1>
-            <p class="back"><a href="/profileInfo">Back to Profile</a></p>
-            <% requests.forEach(request => { %>
-                <div class="sent-details">
-                    <h2 class="user">Request to: <%= request.toUser.name %></h2>
-                    <p class="info">From: <%= request.toUser.address %></p>
-                    <p class="info">Book: <%= request.book.title %></p>
-                    <p class="info">Status: <%= request.status %></p>
-                    <p class="info">Sent: <%= request.formattedTime %></p>
-                    <form action="/cancelRequest" method="POST">
-                        <div class="btn-container">
-                            <input type="hidden" name="requestId" value="<%= request._id %>">
-                            <button type="submit" class="btn">Cancel</button>
-                        </div>
-                    </form>
-                </div>
-            <% }) %>
+    <!-- Hero Section -->
+    <section class="hero-section" style="padding: 40px 20px;">
+        <div class="hero-badge">
+            <i class="fa-solid fa-paper-plane"></i> SENT REQUESTS
         </div>
+        <h1 class="hero-title">My Sent Requests</h1>
+        <p class="hero-subtitle">Track all your book borrowing requests</p>
+        <a href="/profileInfo" style="display: inline-block; margin-top: 15px; color: #8b7fc7; text-decoration: none; font-weight: 500;">
+            <i class="fa-solid fa-arrow-left"></i> Back to Profile
+        </a>
     </section>
+
+    <!-- Requests Section -->
+    <% if (requests.length === 0) { %>
+        <section class="empty-state">
+            <div class="empty-state-icon">
+                <i class="fa-solid fa-paper-plane"></i>
+            </div>
+            <h2 class="empty-state-title">No sent requests</h2>
+            <p class="empty-state-text">You haven't sent any book requests yet. Browse books and request to borrow!</p>
+            <a href="/dashboard" class="btn-view" style="display: inline-block; margin-top: 20px;">
+                <i class="fa-solid fa-magnifying-glass"></i> Browse Books
+            </a>
+        </section>
+    <% } else { %>
+        <section class="requests-section">
+            <div class="notifications-grid" style="max-width: 900px; margin: 0 auto;">
+                <% requests.forEach(request => { %>
+                    <div class="notification-card request-card">
+                        <!-- User Info Section -->
+                        <div class="notification-header">
+                            <div class="notification-avatar">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <div class="notification-user-info">
+                                <h3 class="notification-user-name"><%= request.toUser.name %></h3>
+                                <div class="notification-time">
+                                    <i class="fa-solid fa-clock"></i> <%= request.formattedTime %>
+                                </div>
+                            </div>
+                            <div class="request-status" style="margin-left: auto;">
+                                <span class="status-badge <%= request.status === 'accepted' ? 'status-accepted' : request.status === 'declined' ? 'status-declined' : 'status-pending' %>">
+                                    <% if (request.status === 'accepted') { %>
+                                        <i class="fa-solid fa-circle-check"></i> Accepted
+                                    <% } else if (request.status === 'declined') { %>
+                                        <i class="fa-solid fa-circle-xmark"></i> Declined
+                                    <% } else { %>
+                                        <i class="fa-solid fa-clock"></i> Pending
+                                    <% } %>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Book & Location Details -->
+                        <div class="notification-content">
+                            <div style="display: grid; gap: 12px; margin-bottom: 15px;">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <i class="fa-solid fa-book" style="color: #8b7fc7; width: 20px;"></i>
+                                    <span><strong>Book:</strong> <%= request.book.title %></span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <i class="fa-solid fa-location-dot" style="color: #8b7fc7; width: 20px;"></i>
+                                    <span><strong>Location:</strong> <%= request.toUser.address %></span>
+                                </div>
+                            </div>
+
+                            <!-- Cancel Button (only for pending requests) -->
+                            <% if (request.status === 'pending') { %>
+                                <form action="/cancelRequest" method="POST" style="margin-top: 15px;">
+                                    <input type="hidden" name="requestId" value="<%= request._id %>">
+                                    <button type="submit" class="btn-decline" style="width: 100%;">
+                                        <i class="fa-solid fa-xmark"></i> Cancel Request
+                                    </button>
+                                </form>
+                            <% } %>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </section>
     <% } %>
 
-
-
-    <footer>
-        <div class="footer">
-            <div class="footer-content">
-                <p>Made with ❤️ by CSE Dept. of JUST</p>
+    <!-- Modern Footer -->
+    <footer class="modern-footer">
+        <div class="footer-content">
+            <div class="footer-text">
+                <i class="fa-solid fa-heart"></i> Made with love by CSE Dept. of JUST
             </div>
-            <div class="contact">
-                <p>Contact us: <a href="mailto:sharereadsbd@gmail.com">sharereadsbd@gmail.com</a></p>
+            <div class="footer-contact">
+                <i class="fa-solid fa-envelope"></i> <a href="mailto:sharereadsbd@gmail.com">sharereadsbd@gmail.com</a>
             </div>
         </div>
-        <hr>
-        <p>All rights reserved © Share Reads 2024</p>
+        <hr class="footer-divider">
+        <div class="footer-copyright">
+            © 2024 Share Reads. All rights reserved.
+        </div>
     </footer>
-    
+
+    <style>
+        /* Request-specific status badges */
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .status-pending {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            color: #8b4513;
+        }
+        
+        .status-accepted {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #2d5016;
+        }
+        
+        .status-declined {
+            background: linear-gradient(135deg, #ffecd2 0%, #ff9a9e 100%);
+            color: #8b1538;
+        }
+
+        .request-card {
+            border-left: 4px solid #8b7fc7;
+        }
+    </style>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu').addEventListener('click', function () {
+            this.classList.toggle('active');
+            document.getElementById('nav-menu').classList.toggle('active');
+        });
+    </script>
 </body>
 </html>

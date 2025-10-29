@@ -4,27 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Share Reads</title>
-    <link rel="stylesheet" href="css/style4.css"> 
+    <link rel="stylesheet" href="css/modern-style.css">
     <link rel="icon" href="images/book.png" type="image/png">
 </head>
 <body>
-    <section id="hero">
-        <div class="container">
-            <div>
-                <p class="subtitle">Welcome to Share Reads</p>
-                <h1 class="title">Give your old books a new life! <br>
-                    Share them with ease on our platform!</h1>
-
-                    <form action="/welcome" method="post">
-                        <div class="btn-container">
-                            <button class="btn">Start Sharing</button>
-                        </div>
-                    </form>
+    <section class="hero-modern">
+        <div class="hero-content">
+            <p class="hero-subtitle">📚 Welcome to Share Reads</p>
+            <h1 class="hero-title">Give your old books a new life!<br>Share them with ease on our platform!</h1>
             
-                    
+            <form action="/welcome" method="post" style="animation: fadeInUp 0.8s ease 0.4s both;">
+                <button type="submit" class="btn-modern" style="font-size: 18px; padding: 16px 48px;">
+                    Start Sharing →
+                </button>
+            </form>
+            
+            <div style="margin-top: 3rem; display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; animation: fadeInUp 0.8s ease 0.6s both;">
+                <div style="text-align: center;">
+                    <div style="font-size: 32px; font-weight: 700; color: white;">1000+</div>
+                    <div style="font-size: 14px; color: rgba(255,255,255,0.8);">Books Shared</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 32px; font-weight: 700; color: white;">500+</div>
+                    <div style="font-size: 14px; color: rgba(255,255,255,0.8);">Happy Readers</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 32px; font-weight: 700; color: white;">8</div>
+                    <div style="font-size: 14px; color: rgba(255,255,255,0.8);">Divisions</div>
+                </div>
             </div>
         </div>
     </section>
-    
 </body>
 </html>

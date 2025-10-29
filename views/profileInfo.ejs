@@ -3,83 +3,283 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Share Reads</title>
-    <link rel="stylesheet" href="css/style7.css">
+    <title>My Profile - Share Reads</title>
+    <script src="https://kit.fontawesome.com/b795da5b50.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/dashboard-modern.css">
     <link rel="icon" href="images/book.png" type="image/png">
+    <style>
+        .profile-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 32px 80px;
+        }
+        
+        .profile-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow: 0 8px 32px rgba(139, 127, 199, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            margin-bottom: 40px;
+            padding-bottom: 32px;
+            border-bottom: 2px solid rgba(139, 127, 199, 0.1);
+        }
+        
+        .profile-image-wrapper {
+            flex-shrink: 0;
+        }
+        
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(139, 127, 199, 0.2);
+            box-shadow: 0 8px 24px rgba(139, 127, 199, 0.2);
+        }
+        
+        .profile-info {
+            flex: 1;
+        }
+        
+        .profile-name {
+            font-size: 36px;
+            font-weight: 700;
+            color: #4a4a68;
+            margin-bottom: 8px;
+        }
+        
+        .profile-details {
+            background: rgba(139, 127, 199, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .detail-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(139, 127, 199, 0.1);
+        }
+        
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-icon {
+            width: 24px;
+            color: #8b7fc7;
+            text-align: center;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #4a4a68;
+            min-width: 100px;
+        }
+        
+        .detail-value {
+            color: #8e8ea7;
+        }
+        
+        .btn-edit {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #8b7fc7 0%, #a89fd9 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(139, 127, 199, 0.25);
+        }
+        
+        .btn-edit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(139, 127, 199, 0.35);
+            color: white;
+        }
+        
+        .btn-requests {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background: white;
+            color: #8b7fc7;
+            border: 2px solid #8b7fc7;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-left: 12px;
+        }
+        
+        .btn-requests:hover {
+            background: rgba(139, 127, 199, 0.08);
+            transform: translateY(-2px);
+            color: #8b7fc7;
+        }
+        
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-card {
+                padding: 32px 24px;
+            }
+            
+            .btn-edit, .btn-requests {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 12px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header class="nav-header">
-        <nav>
-            <a href="/dashboard"> <img src="images/Share Reads .png" alt=""></a>
+    <!-- Modern Navigation Header -->
+    <header class="modern-header">
+        <nav class="nav-container">
+            <a href="/dashboard" class="nav-logo">
+                <img src="images/Share Reads .png" alt="Share Reads Logo">
+            </a>
             <div class="menu-toggle" id="mobile-menu">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
             </div>
-            <ul class="navbar">
-                <li id="home"><a href="/dashboard">HOME</a></li>
-                <li id="profile"><a href="/profileInfo">PROFILE</a></li>
-                <li id="booklist"><a href="/booklist">BOOK LIST</a></li>
-                <li id="notifications"><a href="/notifications">NOTIFICATIONS
-                    <% if (unreadCount > 0) { %>
-                        <span class="notification-badge"><%= unreadCount %></span>
-                    <% } %>
-                </a></li>
-                <li id="logout"><a href="/">LOG OUT</a></li>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="/dashboard"><i class="fa-solid fa-home"></i> Home</a></li>
+                <li><a href="/profileInfo" class="active"><i class="fa-solid fa-user"></i> Profile</a></li>
+                <li><a href="/booklist"><i class="fa-solid fa-book"></i> My Books</a></li>
+                <li>
+                    <a href="/notifications">
+                        <i class="fa-solid fa-bell"></i> Notifications
+                        <% if (unreadCount > 0) { %>
+                            <span class="notification-badge"><%= unreadCount %></span>
+                        <% } %>
+                    </a>
+                </li>
+                <li><a href="/" style="color: #ff9a9e;"><i class="fa-solid fa-sign-out-alt"></i> Logout</a></li>
             </ul>
         </nav>
     </header>
-    
-    <section class="profile">
-        <div class="container">
-            <div class="info">
-                <% if (typeof userImage != "undefined") { %>
-                    <img src="<%= userImage %>" alt="Profile Picture" class="img">
-                <% } else { %>
-                    <img src="images/user.png" alt="Profile Picture" class="img">
-                <% } %>
-                <div class="info-content">
-                    <h1 class="name"><%= userName %></h1>
-                    <p class="details">
-                        <strong>Gender:</strong> <%= userGender %><br>
-                        <strong>Email:</strong> <%= userEmail %><br>
-                        <strong>Division:</strong> <%= userDivision %><br>
-                        <strong>Address:</strong> <%= userAddress %><br>
-                        <strong>Phone:</strong> <%= userPhone %><br>
-                    </p>
-                    <a href="/profile" class="btn btn-primary px-5 mb-5">Edit Profile</a>
 
-            <div class="sentRequest">
-                <a href="/viewSentRequest">Show your sent requests</a>
-            </div>
-            
+    <!-- Hero Section -->
+    <section class="dashboard-hero">
+        <div class="hero-badge">
+            <i class="fa-solid fa-user-circle"></i> My Profile
+        </div>
+        <h1 class="hero-title">Profile Information</h1>
+        <p class="hero-subtitle">View and manage your account details</p>
+    </section>
+    
+    <!-- Profile Content -->
+    <section class="profile-container">
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="profile-image-wrapper">
+                    <% if (typeof userImage != "undefined") { %>
+                        <img src="<%= userImage %>" alt="Profile Picture" class="profile-image">
+                    <% } else { %>
+                        <img src="images/user.png" alt="Profile Picture" class="profile-image">
+                    <% } %>
+                </div>
+                
+                <div class="profile-info">
+                    <h1 class="profile-name"><%= userName %></h1>
+                    <div style="margin-top: 20px;">
+                        <a href="/profile" class="btn-edit">
+                            <i class="fa-solid fa-edit"></i> Edit Profile
+                        </a>
+                        <a href="/viewSentRequest" class="btn-requests">
+                            <i class="fa-solid fa-paper-plane"></i> My Requests
+                        </a>
+                    </div>
                 </div>
             </div>
-            <div class="profile-character">
-                <img src="images/profile.png" alt="Profile Character">
+            
+            <div class="profile-details">
+                <div class="detail-row">
+                    <div class="detail-icon">
+                        <i class="fa-solid fa-venus-mars"></i>
+                    </div>
+                    <div class="detail-label">Gender:</div>
+                    <div class="detail-value"><%= userGender %></div>
+                </div>
+                
+                <div class="detail-row">
+                    <div class="detail-icon">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <div class="detail-label">Email:</div>
+                    <div class="detail-value"><%= userEmail %></div>
+                </div>
+                
+                <div class="detail-row">
+                    <div class="detail-icon">
+                        <i class="fa-solid fa-map"></i>
+                    </div>
+                    <div class="detail-label">Division:</div>
+                    <div class="detail-value"><%= userDivision %></div>
+                </div>
+                
+                <div class="detail-row">
+                    <div class="detail-icon">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <div class="detail-label">Address:</div>
+                    <div class="detail-value"><%= userAddress %></div>
+                </div>
+                
+                <div class="detail-row">
+                    <div class="detail-icon">
+                        <i class="fa-solid fa-phone"></i>
+                    </div>
+                    <div class="detail-label">Phone:</div>
+                    <div class="detail-value"><%= userPhone %></div>
+                </div>
             </div>
         </div>
     </section>
 
-    <footer>
-        <div class="footer">
-            <div class="footer-content">
-                <p>Made with ❤️ by CSE Dept. of JUST</p>
+    <!-- Modern Footer -->
+    <footer class="modern-footer">
+        <div class="footer-content">
+            <div class="footer-text">
+                <i class="fa-solid fa-heart"></i> Made with love by CSE Dept. of JUST
             </div>
-            <div class="contact">
-                <p>Contact us: <a href="mailto:sharereadsbd@gmail.com">sharereadsbd@gmail.com</a></p>
+            <div class="footer-contact">
+                <i class="fa-solid fa-envelope"></i> <a href="mailto:sharereadsbd@gmail.com">sharereadsbd@gmail.com</a>
             </div>
         </div>
-        <hr>
-        <p>All rights reserved © Share Reads 2024</p>
+        <hr class="footer-divider">
+        <div class="footer-copyright">
+            © 2024 Share Reads. All rights reserved.
+        </div>
     </footer>
 
-<script>
-    document.getElementById('mobile-menu').addEventListener('click', function () {
-        this.classList.toggle('active');
-        document.querySelector('.navbar').classList.toggle('active');
-    });
-</script>
-  
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu').addEventListener('click', function () {
+            this.classList.toggle('active');
+            document.getElementById('nav-menu').classList.toggle('active');
+        });
+    </script>
 </body>
 </html>
