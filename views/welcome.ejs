@@ -551,6 +551,21 @@
                     </a>
                 </div>
                 
+                <div style="margin-top: 20px;">
+                    <button onclick="demoLogin()" class="hero-cta-demo" style="font-size: 16px; padding: 14px 36px; text-decoration: none; background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); color: #8b4513; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 16px rgba(252, 182, 159, 0.3); font-weight: 700; border: 2px solid rgba(255, 255, 255, 0.6); border-radius: 14px; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; transition: all 0.3s ease;">
+                        <i class="fa-solid fa-eye"></i> Try Demo Account
+                    </button>
+                    <p style="margin-top: 10px; font-size: 13px; color: rgba(255, 255, 255, 0.8); font-weight: 500;">
+                        <i class="fa-solid fa-info-circle"></i> No registration required - explore the platform instantly
+                    </p>
+                </div>
+                
+                <!-- Hidden Demo Login Form -->
+                <form id="demoLoginForm" action="/login" method="POST" style="display: none;">
+                    <input type="hidden" name="username" value="nehalmushfiq@gmail.com">
+                    <input type="hidden" name="password" value="11111111">
+                </form>
+                
                 <div class="hero-stats">
                     <div class="stat-item">
                         <div class="stat-number">1000+</div>
@@ -617,6 +632,22 @@
                 icon.classList.remove('fa-times');
                 icon.classList.add('fa-bars');
             }
+        });
+        
+        // Demo login function
+        function demoLogin() {
+            document.getElementById('demoLoginForm').submit();
+        }
+        
+        // Add hover effect to demo button
+        document.querySelector('.hero-cta-demo').addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px) scale(1.02)';
+            this.style.boxShadow = '0 8px 24px rgba(252, 182, 159, 0.5)';
+        });
+        
+        document.querySelector('.hero-cta-demo').addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+            this.style.boxShadow = '0 4px 16px rgba(252, 182, 159, 0.3)';
         });
     </script>
 </body>
