@@ -194,7 +194,16 @@
                     <span><%= user.address %></span>
                 </div>
 
-                <form action="/sendRequest" method="POST" style="margin-top: 32px;">
+                <div style="margin-top: 24px; padding: 20px; background: linear-gradient(135deg, rgba(255, 236, 210, 0.5) 0%, rgba(212, 165, 217, 0.3) 100%); border-radius: 16px; border: 2px dashed rgba(139, 127, 199, 0.3);">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 10px; color: #8b7fc7; font-weight: 600; font-size: 14px;">
+                        <i class="fa-solid fa-info-circle" style="font-size: 18px;"></i>
+                        <p style="margin: 0; text-align: center; line-height: 1.6;">
+                            Send request to get contact info<br>(Email & Phone)
+                        </p>
+                    </div>
+                </div>
+
+                <form action="/sendRequest" method="POST" style="margin-top: 24px;">
                     <input type="hidden" name="toUserId" value="<%= user._id %>">
                     <input type="hidden" name="bookId" value="<%= book._id %>">
                     <button id="requestButton" type="submit" class="btn-request <%= requestExists ? 'cancel' : '' %>">
