@@ -141,7 +141,11 @@
             const modal = document.getElementById('bookModal');
             const content = document.getElementById('modalContent');
             
+            // Add a state to history so back button can close modal
+            history.pushState({ modalOpen: true }, '');
+            
             modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
             content.innerHTML = '<div class="book-modal-loading"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading...</div>';
             
             try {
@@ -160,8 +164,26 @@
         }
 
         function closeBookModal() {
-            document.getElementById('bookModal').classList.remove('active');
+            const modal = document.getElementById('bookModal');
+            if (modal.classList.contains('active')) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                
+                // Remove the modal state from history if it exists
+                if (history.state && history.state.modalOpen) {
+                    history.back();
+                }
+            }
         }
+
+        // Handle browser back button
+        window.addEventListener('popstate', function(event) {
+            const modal = document.getElementById('bookModal');
+            if (modal.classList.contains('active')) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
 
         // Close modal on overlay click
         document.getElementById('bookModal').addEventListener('click', function(e) {
