@@ -542,23 +542,24 @@
                     Join our community of book lovers. Share, discover, and borrow books with ease. Connect with fellow readers and make your books available to those who'll cherish them.
                 </p>
                 
-                <div class="hero-buttons">
-                    <a href="/signup" class="hero-cta-primary" style="font-size: 18px; padding: 18px 48px; text-decoration: none; background: linear-gradient(135deg, #8b7fc7 0%, #a89fd9 100%); box-shadow: 0 8px 32px rgba(139, 127, 199, 0.4); font-weight: 700; border-radius: 16px; color: white; display: inline-flex; align-items: center; gap: 10px;">
-                        <i class="fa-solid fa-rocket"></i> Get Started Free
-                    </a>
-                    <a href="/login" class="hero-cta-secondary" style="font-size: 18px; padding: 18px 48px; text-decoration: none; background: rgba(255, 255, 255, 0.9); color: #8b7fc7; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 16px rgba(139, 127, 199, 0.2); font-weight: 700; border: 2px solid rgba(255, 255, 255, 0.5); border-radius: 16px; display: inline-flex; align-items: center; gap: 10px;">
-                        <i class="fa-solid fa-sign-in-alt"></i> Login
-                    </a>
-                </div>
-                
-                <div style="margin-top: 20px;">
-                    <button onclick="demoLogin()" class="hero-cta-demo" style="font-size: 16px; padding: 14px 36px; text-decoration: none; background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); color: #8b4513; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 16px rgba(252, 182, 159, 0.3); font-weight: 700; border: 2px solid rgba(255, 255, 255, 0.6); border-radius: 14px; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; transition: all 0.3s ease;">
+                <div style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start;">
+                    <button onclick="demoLogin()" class="hero-cta-demo" style="font-size: 18px; padding: 18px 48px; text-decoration: none; background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); color: #8b4513; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 16px rgba(252, 182, 159, 0.3); font-weight: 700; border: 2px solid rgba(255, 255, 255, 0.6); border-radius: 16px; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; transition: all 0.3s ease;">
                         <i class="fa-solid fa-eye"></i> Try Demo Account
                     </button>
-                    <p style="margin-top: 10px; font-size: 13px; color: rgba(255, 255, 255, 0.8); font-weight: 500;">
-                        <i class="fa-solid fa-info-circle"></i> No registration required - explore the platform instantly
-                    </p>
+                    
+                    <div class="hero-buttons">
+                        <a href="/signup" class="hero-cta-primary" style="font-size: 18px; padding: 18px 48px; text-decoration: none; background: linear-gradient(135deg, #8b7fc7 0%, #a89fd9 100%); box-shadow: 0 8px 32px rgba(139, 127, 199, 0.4); font-weight: 700; border-radius: 16px; color: white; display: inline-flex; align-items: center; gap: 10px;">
+                            <i class="fa-solid fa-rocket"></i> Get Started Free
+                        </a>
+                        <a href="/login" class="hero-cta-secondary" style="font-size: 18px; padding: 18px 48px; text-decoration: none; background: rgba(255, 255, 255, 0.9); color: #8b7fc7; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 16px rgba(139, 127, 199, 0.2); font-weight: 700; border: 2px solid rgba(255, 255, 255, 0.5); border-radius: 16px; display: inline-flex; align-items: center; gap: 10px;">
+                            <i class="fa-solid fa-sign-in-alt"></i> Login
+                        </a>
+                    </div>
                 </div>
+                
+                <p style="margin-top: 16px; font-size: 14px; color: rgba(255, 255, 255, 0.85); font-weight: 500; display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-info-circle"></i> Try demo account - no registration required
+                </p>
                 
                 <!-- Hidden Demo Login Form -->
                 <form id="demoLoginForm" action="/login" method="POST" style="display: none;">
