@@ -42,7 +42,10 @@ exports.addBook = [
                     public: true,
                 });
 
-                bookImageUrl = file.publicUrl(); 
+                // Generate the public URL
+                bookImageUrl = `https://storage.googleapis.com/${bucket.name}/${fileName}`;
+            } else {
+                throw new Error('Book image is required');
             }
 
             const newBook = new Book({
@@ -55,11 +58,18 @@ exports.addBook = [
             });
 
             await newBook.save();
+            console.log('Book saved successfully:', newBook.title);
             res.redirect("/booklist");
             
         } catch (err) {
-            console.log(err);
-            res.redirect("/profile");
+            console.error('Error adding book:', err);
+            console.error('Error details:', {
+                message: err.message,
+                stack: err.stack,
+                file: req.file ? 'File uploaded' : 'No file',
+                body: req.body
+            });
+            res.redirect("/booklist");
         }
     }
 ];
